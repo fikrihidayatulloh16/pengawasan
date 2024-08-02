@@ -3,6 +3,18 @@
     include "../../public/layout/admin/header_projek.php";
 ?>
 
+<style>
+    @media (max-width: 576px) {
+        .kolom-aksi {
+            width: 50%; /* 4 dari 12 kolom */
+        }
+
+        span {
+            display: none;
+        }
+    }
+</style>
+
 <body>
     <h1 class="text-center">Master Projek</h1>
         
@@ -15,7 +27,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">Tambah Proyek</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="form_tambah" action="../../script/insert.php" method="POST">
+                    <form id="form_tambah" action="../../script/insert.php" method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="mb-3">
                                 <?php 
@@ -38,27 +50,42 @@
                                 <label for="nama_projek" class="form-label">Nama Proyek</label>
                                 <input type="text" class="form-control" id="nama_projek" name="nama_projek" required>
                             </div>
+
                             <div class="mb-3">
                                 <label for="tanggal_mulai_tambah" class="form-label">Tanggal Mulai</label>
                                 <input type="date" class="form-control" id="tanggal_mulai_tambah" name="tanggal_mulai_tambah" required>
                                 <small id="tanggalMulaiError_tambah" class="form-text text-danger" style="display:none;">Tanggal mulai tidak boleh lebih awal dari hari ini.</small>
                             </div>
+
                             <div class="mb-3">
                                 <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
                                 <input type="date" class="form-control" id="tanggal_selesai_tambah" name="tanggal_selesai_tambah" required>
                                 <small id="tanggalSelesaiError_tambah" class="form-text text-danger" style="display:none;">Tanggal selesai tidak boleh kurang dari tanggal mulai.</small>
                             </div>
+
                             <div class="mb-3">
                                 <label for="pemilik_pekerjaan" class="form-label">Pemilik Pekerjaan</label>
                                 <input type="text" class="form-control" id="pemilik_pekerjaan" name="pemilik_pekerjaan" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="logo1" class="form-label">Logo Pemilik</label>
+                                <input type="file" class="form-control" id="logo1" name="logo1" accept="image/*">
                             </div>
                             <div class="mb-3">
                                 <label for="pengawas" class="form-label">Pengawas</label>
                                 <input type="text" class="form-control" id="pengawas" name="pengawas" required>
                             </div>
                             <div class="mb-3">
+                                <label for="logo2" class="form-label">Logo Pengawas</label>
+                                <input type="file" class="form-control" id="logo2" name="logo2" accept="image/*">
+                            </div>
+                            <div class="mb-3">
                                 <label for="kontraktor" class="form-label">Kontraktor</label>
                                 <input type="text" class="form-control" id="kontraktor" name="kontraktor" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="logo3" class="form-label">Logo Kontraktor</label>
+                                <input type="file" class="form-control" id="logo3" name="logo3" accept="image/*">
                             </div>
                             <div class="mb-3">
                                 <label for="tambahan_waktu_tambah" class="form-label">Tambahan Waktu</label>
@@ -82,7 +109,7 @@
 
             <div class="card">
                 <h5 class="card-header bg-primary text-white">Data Master Projek</h5>
-
+                    <div class="table-responsive">
                     <table>
                     <tr>
                         <th>ID</th>
@@ -109,13 +136,13 @@
                                     <td><?= $data['pengawas']?></td>
                                     <td><?= $data['kontraktor']?></td>
                                     <td><?= $data['tambahan_waktu']?></td> 
-                                    <td>
+                                    <td class="kolom-aksi">
                                         <form action="../../script/projek_pilih.php" method="POST">
-                                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_projek']?>"><i class='bx bxs-trash-alt' > Hapus</i></a>
-                                        <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_projek']?>"><i class='bx bxs-edit-alt' > Ubah</i></a>
+                                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_projek']?>"><i class='bx bxs-trash-alt'><span> Hapus</span></i></a>
+                                        <a href="#" class="btn btn-warning text-dark mt-1" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_projek']?>"><i class='bx bxs-edit-alt' ><span> Ubah</span></i></a>
                                         <input type="hidden" name="id_projek" value="<?=$data['id_projek']?>">
                                         <input type="hidden" name="nama_projek" value="<?=$data['nama_projek']?>">
-                                        <button type="submit" href="#" class="btn btn-primary text-white" id="projek_pilih" name="projek_pilih">Pilih</i></button>
+                                        <button type="submit" href="#" class="btn btn-primary text-white mt-1" id="projek_pilih" name="projek_pilih"><i class='bx bxs-right-arrow-circle'><span> Pilih</span></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -199,6 +226,7 @@
                                 </div>
                         <?php endwhile; ?>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -284,3 +312,4 @@
 
 <?php
     include "../../public/layout/admin/header2.php";
+?>

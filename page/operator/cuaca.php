@@ -37,7 +37,7 @@ if (!$result) {
             border-color: #000; /* Warna garis tabel menjadi hitam */
         }
         .table th, .table td {
-            padding: 1rem; /* Mengurangi padding agar jarak antar kolom lebih kecil */
+            padding: 0.5rem; /* Mengurangi padding agar jarak antar kolom lebih kecil */
         }
         .text-center {
             text-align: center; /* Mengatur teks di tengah untuk kelas text-center */
@@ -48,12 +48,14 @@ if (!$result) {
         }
     </style>
 
-<a href="laporanharian.php" class="btn btn-secondary mt-2 ms-3" style="right: 0;">
-        <i class='bx bx-arrow-back'></i>Kembali
-</a>
 
-<div class="container">
-    <h1 class="mt-4">Data Cuaca</h1>
+
+<div class="container mt-3">
+    <a href="pekerjaan.php" class="btn btn-secondary mt-2 ms-3" style="right: 0;">
+        <i class='bx bx-arrow-back'></i>Kembali
+    </a>
+
+    <h3 class="mt-4">Data Cuaca</h3>
     <div class="card">
         <h5 class="card-header bg-primary text-white text-center">Daftar Cuaca</h5>
         <div class="card-body">

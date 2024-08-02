@@ -4,23 +4,6 @@
     
 ?>
 
-<style>
-    @media (min-width: 1024px) {
-        .kolom-aksi {
-            columns: 5;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .kolom-aksi {
-            width: 33.3333%; /* 4 dari 12 kolom */
-        }
-        span {
-            display: none;
-        }
-    }
-</style>
-
 <body>
     <h1 class="text-center">Master Pekerjaan</h1>
     <h2 class="text-center">Nama Projek : <?= $_SESSION['nama_projek']?></h2>
@@ -71,49 +54,36 @@
 
     <div class="container mt-3">
 
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#form">
-                <i class='bx bx-plus-medical' width='500px' name="btambah"></i> Tambah</button>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#form"><i class='bx bx-plus-medical' width='500px' name="btambah"></i> Tambah</button>
 
         <div class="card">
             <h5 class="card-header bg-primary text-white">Data Master Pekerjaan</h5>
 
                 <table>
                 <tr>
-    <th class="col-2">ID</th>
-    <th>Nama Pekerjaan</th>
-    <th class="col-2">Aksi</th>
-</tr>
-<?php
-    //menampilkan data
-    $id_projek = $_SESSION['id_projek'];
-    $tampil = mysqli_query($conn, "SELECT id_m_pekerjaan, nama_pekerjaan FROM m_pekerjaan AS pk, m_projek AS pj WHERE pk.id_projek = '$id_projek' AND pj.id_projek = '$id_projek' ORDER BY id_m_pekerjaan ASC");
-    while ($data = mysqli_fetch_array($tampil)) :
-?>
-<tr>
-    <td><?= $data['id_m_pekerjaan'] ?></td>
-    <td>
-    <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne<?= $data['id_m_pekerjaan'] ?>" aria-expanded="false" aria-controls="collapseOne<?= $data['id_m_pekerjaan'] ?>">
-                <?= $data['nama_pekerjaan'] ?>
-            </button>
-        </h2>
-        </div>
-    </div>
-    </td>
-    <td>
-        <form action="../../script/pekerjaan_pilih.php" method="POST">
-            <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $data['id_m_pekerjaan'] ?>"><i class='bx bxs-trash-alt'><span> Hapus</span></i></a>
-            <a href="#" class="btn btn-warning text-dark mt-1" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $data['id_m_pekerjaan'] ?>"><i class='bx bxs-edit-alt'><span> Ubah</span></i></a>
-            <input type="hidden" name="id_m_pekerjaan" value="<?= $data['id_m_pekerjaan'] ?>">
-            <input type="hidden" name="nama_pekerjaan" value="<?= $data['nama_pekerjaan'] ?>">
-        </form>
-    </td>
-</tr>
-
-    <?php include "m_sub_pekerjaan.php"?>
-                            
+                    <th>ID</th>
+                    <th>Jenis Pekerja</th>
+                    <th class="col-3">Aksi</th>
+                </tr>
+                    <?php
+                        //menampilkan data
+                        $id_projek= $_SESSION['id_projek'];
+                        $tampil = mysqli_query($conn, "SELECT id_m_pekerjaan, nama_pekerjaan FROM m_pekerjaan AS pk, m_projek AS pj WHERE pk.id_projek = '$id_projek' AND pj.id_projek = '$id_projek' ORDER BY id_m_pekerjaan ASC");
+                        while ($data = mysqli_fetch_array($tampil)) : 
+                    ?>
+                            <tr>
+                                <td><?= $data['id_m_pekerjaan']?></td>
+                                <td><?= $data['nama_pekerjaan']?></td>
+                                <td>
+                                    <form action="../../script/pekerjaan_pilih.php" method="POST">
+                                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_m_pekerjaan']?>"><i class='bx bxs-trash-alt' > Hapus</i></a>
+                                        <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_m_pekerjaan']?>"><i class='bx bxs-edit-alt' > Ubah</i></a>
+                                        <input type="hidden" name="id_m_pekerjaan" value="<?=$data['id_m_pekerjaan']?>">
+                                        <input type="hidden" name="nama_pekerjaan" value="<?=$data['nama_pekerjaan']?>">
+                                        <button type="submit" href="#" class="btn btn-primary text-white" id="pekerjaan_pilih" name="pekerjaan_pilih">Detail</i></button>
+                                    </form>
+                                </td>
+                            </tr>
 
                             <!-- Ubah Modal -->
                             <div class="modal fade" id="modalUbah<?=$data['id_m_pekerjaan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -190,5 +160,7 @@
 </body>
 
 <?php
+    include "../../public/alert/successAlert.php";
+
     include "../../public/layout/admin/header2.php";
 ?>

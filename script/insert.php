@@ -86,7 +86,30 @@ function generateNextIdPeralatan($conn) {
     return $new_id;
 }
 
-// Ambil data dari form dan lakukan operasi yang sesuai
+// fungsi untuk memproses logo
+function convertToWebP($source, $destination, $quality = 80) {
+    $info = getimagesize($source);
+    if ($info['mime'] == 'image/jpeg') {
+        $image = imagecreatefromjpeg($source);
+    } elseif ($info['mime'] == 'image/png') {
+        $image = imagecreatefrompng($source);
+    } elseif ($info['mime'] == 'image/gif') {
+        $image = imagecreatefromgif($source);
+    } else {
+        return false;
+    }
+
+    imagewebp($image, $destination, $quality);
+    imagedestroy($image);
+    return true;
+}
+
+function imageToBase64($imagePath) {
+    $imageData = file_get_contents($imagePath);
+    return base64_encode($imageData);
+}
+
+
 // Ambil data dari form dan lakukan operasi yang sesuai
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -98,19 +121,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pemilik_pekerjaan = $_POST['pemilik_pekerjaan'];
         $pengawas = $_POST['pengawas'];
         $kontraktor = $_POST['kontraktor'];
-        $tambahan_waktu = !empty($_POST['tambahan_waktu_tambah']) ? $_POST['tambahan_waktu_tambah'] : null;
-
-        // Validasi tanggal selesai
-        if ($tanggal_selesai <= $tanggal_mulai) {
-        echo "<script>
-            popup('Tanggal selesai harus lebih besar dari tanggal mulai dan tidak boleh sama.');
-            document.location='m_projek.php';
-            </script>";
-        exit;}
-
+        $tambahan_waktu = !empty($_POST['tambahan_waktu_tambah']) ? $_POST['tambahan_waktu_tambah'] : NULL;
 
         // Generate ID baru untuk m_projek
         $id_projek = generateNextIdProjek($conn);
+
+         // Handling file upload
+         $unique_id = uniqid('proj_' . $id_projek . '_', true);
+
+         $logo1_name = $_FILES['logo1']['name'];
+         $logo1_ext = pathinfo($logo1_name, PATHINFO_EXTENSION);
+         $logo1_new_name = $unique_id . '_logo1.' . $logo1_ext;
+         $logo1_temp = $_FILES['logo1']['tmp_name'];
+         $logo1_path = 'D:/xampp/htdocs/pengawasan/page/operator/uploads/' . $logo1_new_name;
+         
+         $logo2_name = $_FILES['logo2']['name'];
+         $logo2_ext = pathinfo($logo2_name, PATHINFO_EXTENSION);
+         $logo2_new_name = $unique_id . '_logo2.' . $logo2_ext;
+         $logo2_temp = $_FILES['logo2']['tmp_name'];
+         $logo2_path = 'D:/xampp/htdocs/pengawasan/page/operator/uploads/' . $logo2_new_name;
+         
+         $logo3_name = $_FILES['logo3']['name'];
+         $logo3_ext = pathinfo($logo3_name, PATHINFO_EXTENSION);
+         $logo3_new_name = $unique_id . '_logo3.' . $logo3_ext;
+         $logo3_temp = $_FILES['logo3']['tmp_name'];
+         $logo3_path = 'D:/xampp/htdocs/pengawasan/page/operator/uploads/' . $logo3_new_name;
+
+        //memindahkan file
+        move_uploaded_file($logo1_temp, $logo1_path);
+        move_uploaded_file($logo2_temp, $logo2_path);
+        move_uploaded_file($logo3_temp, $logo3_path);
 
         // Prevent SQL injection
         $nama_projek = $conn->real_escape_string($nama_projek);
@@ -120,19 +160,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pengawas = $conn->real_escape_string($pengawas);
         $kontraktor = $conn->real_escape_string($kontraktor);
 
-        // SQL untuk memasukkan data ke dalam tabel m_projek
-        $sql_m_projek = "INSERT INTO m_projek (id_projek, nama_projek, tanggal_mulai, tanggal_selesai, pemilik_pekerjaan, pengawas, kontraktor, tambahan_waktu)
-                         VALUES ('$id_projek', '$nama_projek', '$tanggal_mulai', '$tanggal_selesai', '$pemilik_pekerjaan', '$pengawas', '$kontraktor', ";
-
         // Tambahkan nilai NULL atau tanggal jika ada
-        if ($tambahan_waktu !== null) {
+        if ($tambahan_waktu !== NULL) {
             $sql_m_projek .= "'$tambahan_waktu')";
         } else {
             $sql_m_projek .= "NULL)";
         }
 
+        // SQL untuk memasukkan data ke dalam tabel m_projek
+        $sql_m_projek = "INSERT INTO m_projek (id_projek, nama_projek, tanggal_mulai, tanggal_selesai, pemilik_pekerjaan, pengawas, kontraktor, logo_pemilik, logo_pengawas, logo_kontrakor, tambahan_waktu)
+                  VALUES ('$id_projek', '$nama_projek', '$tanggal_mulai', '$tanggal_selesai', '$pemilik_pekerjaan', '$pengawas', '$kontraktor', '$logo1_name', '$logo2_name', '$logo3_name', '$tambahan_waktu')";
+
+        $projek_insert = mysqli_query($conn, $sql_m_projek);
+
         // Eksekusi query untuk m_projek
-        if ($conn->query($sql_m_projek) === TRUE) {
+        if ($projek_insert) {
             echo "<script>
                 alert('Simpan Data Berhasil!');
                 document.location='../page/admin/m_projek.php';

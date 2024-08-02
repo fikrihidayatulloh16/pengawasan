@@ -36,13 +36,18 @@
     }
 </style>
 
-<a href="laporanharian.php" class="btn btn-secondary align-item-right ms-3 mt-3">
-    <i class='bx bx-arrow-back' style="margin-right: 5px;"></i>Kembali
-</a>
+
 
 <?php include 'operator.modal/modalAdd.permasalahan.php'; ?>
 
 <div class="container mt-3">
+    <a href="pekerjaan.php" class="btn btn-secondary align-item-right ms-3 mt-3">
+        <i class='bx bx-arrow-back' style="margin-right: 5px;"></i>Kembali
+    </a>
+
+    <button type="button-center" class="btn btn-success ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#masalah_tambah">
+        <i class='bx bx-plus-medical' style="margin-right: 5px;" name="masalah_tambah"></i>Tambah
+    </button>
     
     <div class="card mt-3">
         <h5 class="card-header bg-primary text-white">Data Permasalahan Harian</h5>

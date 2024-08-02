@@ -1,0 +1,38 @@
+/* Alert styles */
+.alert {
+    padding: 20px;
+    background-color: #ffdb9b; /* Green */
+    color: #244e1e;
+    opacity: 0;
+    transition: opacity 0.6s;
+    position: fixed; /* Use fixed to position relative to the viewport */
+    top: 10%;
+    right: 0%;
+    transform: translate(-50%, -50%); /* Center the element */
+    z-index: 1;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    border-left: 8px solid #35772c;
+    text-align: center;
+    display: none;
+}
+
+.alert.success-alert {
+    background-color: #c5f8b1;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}

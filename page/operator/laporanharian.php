@@ -14,6 +14,16 @@
             padding: 8px;
             text-align: center;
         }
+
+        @media (max-width: 576px) {
+            .kolom-aksi {
+                width: 50%; /* 4 dari 12 kolom */
+            }
+
+            span {
+                display: none;
+            }
+        }
 </style>
             <h3 class=" text-center mt-4">Laporan Harian</h3>
 
@@ -77,19 +87,19 @@
                                             $hari_ke = $interval->days + 1; // Ditambah 1 karena hari pertama adalah hari ke-1
                                     ?>
                                         <tr>
-                                            <td class="text-center" style="justify-content: center;"><?= $nomor ?></td>
-                                                <?php echo "<td class='text-align-center my-Auto'><a name='laporan_pilih' href='../../script/operator.script/laporan_pilih.php?
+                                            <td class="text-center align-middle"><?= $nomor ?></td>
+                                                <?php echo "<td class='text-center align-middle'><a name='laporan_pilih' href='../../script/operator.script/laporan_pilih.php?
                                                     id_laporan_harian=" . $data['id_laporan_harian'] . 
                                                     "&tanggal_laporan=" . $data['tanggal_laporan'] . 
                                                     "&nomor=" . $nomor . 
                                                     "'>Hari-ke " . $nomor . "</a></td>"; 
                                                 ?>
-                                            <td class="text-center"><?= $data['tanggal_laporan'] ?></td>
-                                            <td class="text-center"><?= $data['progress_harian'] ?></td>
+                                            <td class="text-center align-middle"><?= $data['tanggal_laporan'] ?></td>
+                                            <td class="text-center align-middle"><?= $data['progress_harian'] ?></td>
                                             <td>
                                                 <form action="../../script/projek_pilih.php" method="POST">
-                                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bxs-trash-alt' ></i></a>
-                                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bxs-edit-alt' ></i></a>
+                                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bxs-trash-alt' ><span> Hapus</span></i></a>
+                                                    <a href="#" class="btn btn-warning text-dark mt-1" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bxs-edit-alt' ><span> Ubah</span></i></a>
                                                     <input type="hidden" name="id_laporan" value="<?=$data['id_laporan_harian']?>">
                                                 </form>
                                             </td>
@@ -99,6 +109,8 @@
                         </div>
                     </div>
 
-            <?php
+<?php
+    include "../../public/alert/successAlert.php";
+
     include "../../public/layout/operator/footer.laporan.php";
 ?>

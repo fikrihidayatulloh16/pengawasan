@@ -1,17 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root"; // username default XAMPP
-$password = ""; // password default XAMPP
-$dbname = "pengawasan"; // ganti ini dengan nama database kamu
-
-// Buat koneksi
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Periksa koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
+include "../koneksi.php";
 //memulai sesi
 session_start();
 
@@ -25,14 +13,13 @@ session_start();
 
         if ($pilih && $nama) {
             echo "<script>
-                    alert('Projek Berhasil Dipilih');
-                    document.location='../page/operator/laporanharian.php';
-                </script>";
+                    sessionStorage.setItem('navigated', 'true');
+                    window.location.href = '../page/operator/laporanharian.php?message=Projek Berhasil Dipilih';
+                  </script>";
         } else {
             echo "<script>
-                    alert('pilih projek Gagal!');
-                    document.location='../page/admin/m_pekerjaan.php';
-                </script>";
+                    window.location.href = '../page/operator/laporanharian.php?message=Pilih Projek Gagal!';
+                  </script>";
         }
     }
 ?>

@@ -35,58 +35,49 @@
         text-align: center;
     }
 </style>
-
-<div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
-    <h3 class="text-center">Laporan Harian ke-<?= $_SESSION['nomor'] ?></h3>
-    <h4 class="text-center">Projek: <?= $_SESSION['nama_projek_op'] ?></h4>
-    <h4 class="text-center">Tanggal: <?= $_SESSION['tanggal_laporan'] ?></h4>
-    <h4 class="text-center"><?= $nama_pekerjaan ?></h4>
-    <button type="button" class="btn btn-success ms-5" data-bs-toggle="modal" data-bs-target="#masalah_tambah">
-        <i class='bx bx-plus-medical' style="margin-right: 5px;"></i>Tambah
-    </button>
-    <a href="laporanharian.php" class="btn btn-secondary align-item-right">
-        <i class='bx bx-arrow-back' style="margin-right: 5px;"></i>Kembali
-    </a>
-</div>
     
-<?php include 'operator.modal/modalAdd.permasalahan.php'; ?>
+<?php include 'operator.modal/modalAdd.timPengawas.php'; ?>
 
 <div class="container mt-3">
+    <a href="pekerjaan.php" class="btn btn-secondary align-item-right ms-3 mt-3">
+        <i class='bx bx-arrow-back' style="margin-right: 5px;"></i> Kembali
+    </a>
+
+    <button type="button-center" class="btn btn-success ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#pengawas_tambah">
+        <i class='bx bx-plus-medical' style="margin-right: 5px;" name="pengawas_tambah"></i> Tambah
+    </button>
     
     <div class="card mt-3">
         <h5 class="card-header bg-primary text-white">Data Tim Pengawas</h5>
         <table class="table table-striped table-bordered table-thick-border">
             <tr>
-                <th>No.</th>
                 <th>Tim Pengawas</th>
-                <th>Saran</th>
+                <th>Tim Leader</th>
                 <th class="col-2">Aksi</th>
             </tr>
             <?php
-                $tampil = mysqli_query($conn, "SELECT ps.id_permasalahan, ps.id_laporan_harian, ps.permasalahan, ps.saran
-                                               FROM permasalahan AS ps
-                                               JOIN laporan_harian AS lh ON lh.id_laporan_harian = ps.id_laporan_harian
-                                               WHERE ps.id_laporan_harian = '$id_laporan_harian'
-                                               AND lh.id_laporan_harian = '$id_laporan_harian'
-                                               ORDER BY ps.id_laporan_harian ASC");
+                $tampil = mysqli_query($conn, "SELECT tp.id_tim_pengawas, tp.tim_pengawas , tp.tim_leader
+                                               FROM tim_pengawas AS tp
+                                               JOIN m_projek AS mp ON mp.id_projek = tp.id_projek
+                                               WHERE tp.id_projek = '$id_projek'
+                                               ORDER BY tp.id_projek ASC");
                 $nomor_masalah = 1;
 
                 if (mysqli_num_rows($tampil) > 0) {
                     while ($data = mysqli_fetch_array($tampil)) : 
             ?>
             <tr>
-                <td class="text-center"><?= $nomor_masalah ?></td>
-                <td class="text-center"><?= $data['permasalahan'] ?></td>
-                <td class="text-center"><?= $data['saran'] ?></td>
+                <td class="text-center"><?= $data['tim_pengawas'] ?></td>
+                <td class="text-center"><?= $data['tim_leader'] ?></td>
                 <td class="text-center">
                     <form action="../../script/projek_pilih.php" method="POST">
-                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $data['id_permasalahan'] ?>">
+                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $data['id_tim_pengawas'] ?>">
                             <i class='bx bxs-trash-alt'></i> Hapus
                         </a>
-                        <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $data['id_permasalahan'] ?>">
+                        <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $data['id_tim_pengawas'] ?>">
                             <i class='bx bxs-edit-alt'></i> Ubah
                         </a>
-                        <input type="hidden" name="id_laporan" value="<?= $data['id_laporan_harian'] ?>">
+                        <input type="hidden" name="id_laporan" value="<?= $data['id_tim_pengawas'] ?>">
                     </form>
                 </td>
             </tr>
@@ -97,7 +88,7 @@
                 } else { 
             ?>
             <tr>
-                <td colspan="4" class="text-center">Tidak ada data permasalahan.</td>
+                <td colspan="4" class="text-center">Tidak ada data Tim Pengawas .</td>
             </tr>
             <?php } ?>
         </table>

@@ -39,9 +39,26 @@
         text-align: center;
     }
 
-    @media (max-width: 576px) {
-        .kolom-aksi {
-            width: 33.3333%; /* 4 dari 12 kolom */
+    .btn-tambah {
+        margin-right: 0;
+    }
+
+    .kolom-aksi{
+        text-align: center;
+    }
+
+    @media (max-width: 1024px) {
+        .kolom-aksi-pekerjaan {
+            width: 30%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .kolom-aksi-pekerjaan {
+            width: 40%; /* 4 dari 12 kolom */
+        }
+        span {
+            display: none;
         }
     }
 </style>
@@ -63,7 +80,7 @@
 ?>
 
 <a href="pekerjaan.php" class="btn btn-secondary mt-2 ms-3" style="right: 0;">
-        <i class='bx bx-arrow-back'></i>Kembali
+    <i class='bx bx-arrow-back'></i>Kembali
 </a>
 
     <nav>
@@ -93,37 +110,37 @@
                 <div class="card mt-3">
                     <h5 class="card-header bg-primary text-white">
                         Data Pekerja
-                        <button type="button-center" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ph-pekerja-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
+                        <button type="button-center" class="btn btn-success btn-tambah" data-bs-toggle="modal" data-bs-target="#ph-pekerja-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
                         Tambah
                         </button>
                     </h5>
 
-                     <table class="table table-striped table-bordered table-thick-border">
+                     <table class="table table-striped table-bordered">
                         <tr>
-                            <th>Nama</th>
+                            <th class="col-3">Nama</th>
                             <th>Jumlah</th>
-                            <th class="kolom-aksi col-2">Aksi</th>
+                            <th class="kolom-aksi-pekerjaan col-2 text-center">Aksi</th>
                         </tr>
-                                
+                        
                         <?php
                         //mengambil data pekerja dari database
-                        $pekerja = mysqli_query($conn, "SELECT pj.id_pekerja, mp.jenis_pekerja, pj.jumlah_pekerja
-                                                        FROM pekerja AS pj
-                                                        JOIN m_pekerja AS mp ON pj.id_m_pekerja = mp.id_m_pekerja
-                                                        JOIN pekerjaan_harian AS ph ON pj.id_laporan_harian = ph.id_laporan_harian AND pj.id_m_sub_pekerjaan = ph.id_m_sub_pekerjaan
-                                                        WHERE pj.id_m_sub_pekerjaan = '$id_sub_pekerjaan'
-                                                        AND ph.id_m_sub_pekerjaan = '$id_sub_pekerjaan'");
+                        $tampil_pekerja = mysqli_query($conn, "SELECT pj.id_pekerja, mpj.jenis_pekerja, pj.jumlah_pekerja, ph.id_m_sub_pekerjaan
+                                            FROM pekerja AS pj
+                                            JOIN pekerjaan_harian AS ph ON pj.id_laporan_harian = ph.id_laporan_harian AND pj.id_m_sub_pekerjaan = ph.id_m_sub_pekerjaan
+                                            JOIN m_pekerja AS mpj ON pj.id_m_pekerja = mpj.id_m_pekerja
+                                            WHERE pj.id_laporan_harian = '$id_laporan_harian'
+                                            AND pj.id_m_sub_pekerjaan = '$id_sub_pekerjaan'");
 
-                        while ($data_pekerja = mysqli_fetch_assoc($pekerja)) :
+                        while ($data_pekerja = mysqli_fetch_assoc($tampil_pekerja)) :
                         ?>
 
                         <tr>
                             <td class="text-center"><?= $data_pekerja['jenis_pekerja'] ?></td>
-                            <td class="text-center"><?= $data_pekerja['jumlah_pekerja'] ?></td>
+                            <td class="text-center"><?= $data_pekerja['jumlah_pekerja'] ?> Orang</td>
                             <td class="text-center">
                                 <form action="../../script/projek_pilih.php" method="POST">
-                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ph-pekerja-hapus-<?=$data_pekerja['id_pekerja']?>"><i class='bx bxs-trash-alt' ></i></a>
-                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#ph-pekerja-ubah-<?=$data_pekerja['id_pekerja']?>"><i class='bx bxs-edit-alt' ></i></a>
+                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ph-pekerja-hapus-<?=$data_pekerja['id_pekerja']?>"><i class='bx bxs-trash-alt' ></i><span> Hapus</span></a>
+                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#ph-pekerja-ubah-<?=$data_pekerja['id_pekerja']?>"><i class='bx bxs-edit-alt' ></i><span> Ubah</span></a>
                                     <input type="hidden" name="id_laporan" value="<?=$data['id_laporan_harian']?>">
                                 </form>
                             </td>
@@ -136,17 +153,16 @@
                 <div class="card mt-3">
                     <h5 class="card-header bg-primary text-white">
                         Data Peralatan
-                        <button type="button-center" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ph-peralatan-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
+                        <button type="button-center" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ph-peralatan-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
                         Tambah
                         </button>
                     </h5>
 
-                     <table class="table table-striped table-bordered table-thick-border">
+                     <table class="table table-striped table-bordered ">
                         <tr>
-                            <th>Nama</th>
+                            <th class="col-3">Nama</th>
                             <th>Jumlah</th>
-                            <th>Satuan</th>
-                            <th class="kolom-aksi col-2">Aksi</th>
+                            <th class="kolom-aksi-pekerjaan col-2">Aksi</th>
                         </tr>
 
                         <?php
@@ -155,20 +171,20 @@
                                                         FROM peralatan AS pl
                                                         JOIN m_peralatan AS mp ON pl.id_m_peralatan = mp.id_m_peralatan
                                                         JOIN pekerjaan_harian AS ph ON pl.id_laporan_harian = ph.id_laporan_harian AND pl.id_m_sub_pekerjaan = ph.id_m_sub_pekerjaan
-                                                        WHERE pl.id_m_sub_pekerjaan = '$id_sub_pekerjaan'
-                                                        AND ph.id_m_sub_pekerjaan = '$id_sub_pekerjaan'");
+                                                        WHERE pl.id_laporan_harian = '$id_laporan_harian'
+                                                        AND pl.id_m_sub_pekerjaan = '$id_sub_pekerjaan'")
+                                                        ;
 
                         while ($data_peralatan = mysqli_fetch_assoc($peralatan)) :
                         ?>
                         
                         <tr>
                             <td class="text-center"><?= $data_peralatan['nama_alat'] ?></td>
-                            <td class="text-center"><?= $data_peralatan['jumlah_peralatan'] ?></td>
-                            <td class="text-center"><?= $data_peralatan['satuan'] ?></td>
+                            <td class="text-center"><?= $data_peralatan['jumlah_peralatan'] ?> <?= $data_peralatan['satuan'] ?></td>
                             <td class="text-center">
                                 <form action="../../script/projek_pilih.php" method="POST">
-                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bxs-trash-alt' ></i></a>
-                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bxs-edit-alt' ></i></a>
+                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bxs-trash-alt' ></i><span> Hapus</span></a>
+                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bxs-edit-alt' ></i><span> Ubah</span></a>
                                     <input type="hidden" name="id_laporan" value="<?=$data['id_laporan_harian']?>">
                                 </form>
                             </td>
@@ -180,17 +196,16 @@
                 <div class="card mt-3">
                     <h5 class="card-header bg-primary text-white">
                         Data Bahan
-                        <button type="button-center" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ph-bahan-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
+                        <button type="button-center" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ph-bahan-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
                         Tambah
                         </button>
                     </h5>
 
-                     <table class="table table-striped table-bordered table-thick-border">
+                     <table class="table table-striped table-bordered">
                         <tr>
-                            <th>Nama</th>
+                            <th class="col-3">Nama</th>
                             <th>Jumlah</th>
-                            <th>Satuan</th>
-                            <th class="kolom-aksi col-2">Aksi</th>
+                            <th class="kolom-aksi-pekerjaan col-2">Aksi</th>
                         </tr>
 
                         <?php
@@ -199,7 +214,7 @@
                                                         FROM bahan AS bh
                                                         JOIN m_bahan AS mb ON bh.id_m_bahan = mb.id_m_bahan
                                                         JOIN pekerjaan_harian AS ph ON bh.id_laporan_harian = ph.id_laporan_harian AND bh.id_m_sub_pekerjaan = ph.id_m_sub_pekerjaan
-                                                        WHERE bh.id_m_sub_pekerjaan = '$id_sub_pekerjaan'
+                                                        WHERE bh.id_laporan_harian = '$id_laporan_harian'
                                                         AND ph.id_m_sub_pekerjaan = '$id_sub_pekerjaan'");
 
                         while ($data_bahan = mysqli_fetch_assoc($bahan)) :
@@ -207,12 +222,11 @@
                         
                         <tr>
                             <td class="text-center"><?= $data_bahan['nama_bahan'] ?></td>
-                            <td class="text-center"><?= $data_bahan['jumlah_bahan'] ?></td>
-                            <td class="text-center"><?= $data_bahan['satuan'] ?></td>
+                            <td class="text-center"><?= $data_bahan['jumlah_bahan']?> <?= $data_bahan['satuan'] ?></td>
                             <td class="text-center">
                                 <form action="../../script/projek_pilih.php" method="POST">
-                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bxs-trash-alt' ></i></a>
-                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bxs-edit-alt' ></i></a>
+                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bxs-trash-alt' ></i><span> Hapus</span></a>
+                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bxs-edit-alt' ></i><span> Ubah</span></a>
                                     <input type="hidden" name="id_laporan" value="<?=$data['id_laporan_harian']?>">
                                 </form>
                             </td>
@@ -254,5 +268,7 @@
 </script>
 
 <?php
+    include "../../public/alert/successAlert.php";
+
     include "../../public/layout/operator/footer.operator.php";
 ?>

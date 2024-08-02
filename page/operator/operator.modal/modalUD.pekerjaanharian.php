@@ -46,7 +46,7 @@
                         <label for="jenis_pekerja" class="form-label">Jenis Pekerja</label>
                         <h5 for="nama_sub_pekerjaan" class="form-label text-danger"><?=$data_pekerja['jenis_pekerja']?></h5>
                         <label for="jenis_pekerja" class="form-label">Jumlah</label>
-                        <h5 for="nama_sub_pekerjaan" class="form-label text-danger"><?=$data_pekerja['jumlah_pekerja']?></h5>
+                        <h5 for="nama_sub_pekerjaan" class="form-label text-danger"><?=$data_pekerja['jumlah_pekerja']?> Orang</h5>
                     </div>
                 </div>
                                     

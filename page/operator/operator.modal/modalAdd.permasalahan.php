@@ -3,12 +3,6 @@ include "../../koneksi.php";
 $id_projek = $_SESSION['id_projek_op'];
 ?>
 
-<style>
-    .hidden {
-        display: none;
-    }
-</style>
-
 <!-- Tambah Modal -->
 <div class="modal fade" id="masalah_tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

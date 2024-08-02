@@ -23,12 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Ambil data dari form
         $id_projek = $_POST['id_projek'];
         $tanggal = $_POST['tanggal'];
-        //$progress_harian = !empty($_POST['progress_harian']) ? $_POST['progress_harian'] : 'NULL';
-
-        // Proses penyimpanan data ke dalam database (gunakan sesuai kebutuhan Anda)
-        // Misalnya:
-        // $query = "INSERT INTO tabel_laporan (id_m_pekerjaan, tanggal, progress_harian, total_progres) VALUES ('$id_m_pekerjaan', '$tanggal', '$progress_harian', '$total_progres')";
-        // mysqli_query($conn, $query);
 
         $laporan_harian = "INSERT INTO 
                                 laporan_harian (id_laporan_harian,id_projek, tanggal, progress_harian) 
@@ -42,11 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['box_sp'])) {
             $checkbox_values = $_POST['box_sp'];
             foreach ($checkbox_values as $id_m_sub_pekerjaan) {
-                // Lakukan sesuatu dengan $sub_pekerjaan_id, misalnya simpan ke dalam database
-                // Contoh:
-                // $query_checkbox = "INSERT INTO tabel_checkbox (id_sub_pekerjaan, id_laporan) VALUES ('$sub_pekerjaan_id', '$id_laporan')";
-                // mysqli_query($conn, $query_checkbox);
-
                 $pekerjaan_harian = "INSERT INTO
                                                 pekerjaan_harian(id_laporan_harian, id_m_sub_pekerjaan	)
                                                 VALUE ('$new_id','$id_m_sub_pekerjaan')";
@@ -94,11 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // Tambahkan logika sesuai dengan kebutuhan aplikasi Anda
-        // Setelah penyimpanan berhasil, Anda bisa tambahkan pesan sukses atau redirect ke halaman lain
-        // Contoh:
-        // header("Location: halaman_sukses.php");
-        // exit();
         if ($laporan_insert && $pekerjaan_harian_insert) {
             echo "<script>
                     alert('Simpan Data Laporan Harian Sukses!');
@@ -143,16 +127,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $pekerja_insert = mysqli_query($conn, $pekerja);
         
-        // Tambahkan logika sesuai dengan kebutuhan aplikasi Anda
-        // Setelah penyimpanan berhasil, Anda bisa tambahkan pesan sukses atau redirect ke halaman lain
-        // Contoh:
-        // header("Location: halaman_sukses.php");
-        // exit();
         if ($pekerja_insert) {
             echo "<script>
-                    alert('Simpan Data Pekerja Sukses!');
-                    document.location='../page/operator/operator.pekerjaan.php';
-                </script>";
+                    sessionStorage.setItem('navigated', 'true');
+                    window.location.href = '../page/operator/operator.pekerjaan.php?message=Data Berhasil Disimpan';
+                  </script>";
         } else {
             echo "<script>
                     alert('Simpan Data Pekerja Gagal!');
@@ -192,11 +171,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $peralatan_insert = mysqli_query($conn, $peralatan);
         
-        // Tambahkan logika sesuai dengan kebutuhan aplikasi Anda
-        // Setelah penyimpanan berhasil, Anda bisa tambahkan pesan sukses atau redirect ke halaman lain
-        // Contoh:
-        // header("Location: halaman_sukses.php");
-        // exit();
         if ($peralatan_insert) {
             echo "<script>
                     alert('Simpan Data Peralatan Sukses!');
@@ -243,11 +217,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $bahan_insert = mysqli_query($conn, $bahan);
         
-        // Tambahkan logika sesuai dengan kebutuhan aplikasi Anda
-        // Setelah penyimpanan berhasil, Anda bisa tambahkan pesan sukses atau redirect ke halaman lain
-        // Contoh:
-        // header("Location: halaman_sukses.php");
-        // exit();
         if ($bahan_insert) {
             echo "<script>
                     alert('Simpan Data Bahan Sukses!');
@@ -292,11 +261,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $permasalahan_insert = mysqli_query($conn, $permasalahan);
         
-        // Tambahkan logika sesuai dengan kebutuhan aplikasi Anda
-        // Setelah penyimpanan berhasil, Anda bisa tambahkan pesan sukses atau redirect ke halaman lain
-        // Contoh:
-        // header("Location: halaman_sukses.php");
-        // exit();
         if ($permasalahan_insert) {
             echo "<script>
                     alert('Simpan Data Bahan Sukses!');
@@ -348,9 +312,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-    //tambahkan sesuai kebutuhan
-
-
     // Handle form submission untuk perubahan data cuaca
         if (isset($_POST['cuaca_ubah'])) {
             $id_cuaca_value = $_POST['id_cuaca'];
@@ -380,7 +341,88 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // Operasi untuk Foto Kegiatan
+        //Operasi untuk Tim Pengawas
+        //Tambah Data Tim Pengawas
+        if (isset($_POST['pengawas_simpan'])) {
+            //generate id baru
+            $sql_get_last_id = "SELECT MAX(id_tim_pengawas ) AS last_id FROM tim_pengawas";
+            $result = $conn->query($sql_get_last_id);
+            $row = $result->fetch_assoc();
+            $last_id = $row['last_id'];
+    
+            // Menghasilkan id_laporan baru dengan format PJM001, PJM002, ...
+            if ($last_id) {
+                $num = intval(substr($last_id, 3)) + 1;
+            } else {
+                $num = 1;
+            }
+            $new_id = 'TPG' . str_pad($num, 6, '0', STR_PAD_LEFT); //str_pad($num, 3, '0', STR_PAD_LEFT); <-- untuk 5 karakter contoh PJM001
+    
+            // Ambil data dari form
+            $id_projek = $_POST['id_projek'];
+            $timpengawas = $_POST['timpengawas'];
+            $timleader = $_POST['timleader'];
+    
+            //menyimpan ke database
+            $pengawas = "INSERT INTO 
+                                    tim_pengawas (id_tim_pengawas ,id_projek, tim_pengawas , tim_leader) 
+                                VALUES ('$new_id','$id_projek', '$timpengawas', '$timleader')";
+    
+            $pengawas_insert = mysqli_query($conn, $pengawas);
+
+            if ($permasalahan_insert) {
+                echo "<script>
+                        alert('Simpan Data Tim Pengawas Sukses!');
+                        document.location='../page/operator/operator.timpengawas.php';
+                    </script>";
+            } else {
+                echo "<script>
+                        alert('Simpan Data Pengawas Gagal!');
+                        document.location='../page/operator/operator.timpengawas.php';
+                    </script>";
+            }        
+        }
+    
+        //ubah data permasalahan
+        if (isset($_POST['masalah_ubah'])){
+            // Mengambil Data
+    
+            $ubah = mysqli_query($conn, "UPDATE permasalahan SET permasalahan = '$_POST[permasalahan]', saran = '$_POST[saran]' WHERE id_permasalahan = '$_POST[id_permasalahan]'" );
+    
+            if ($ubah) {
+                echo "<script>
+                        alert('Ubah Data Sukses!');
+                        document.location='../page/operator/operator.permasalahan.php';
+                    </script>";
+            } else {
+                echo "<script>
+                        alert('Ubah Data Gagal!');
+                        document.location='../page/operator/operator.permasalahan.php';
+                    </script>";
+            }
+        }
+    
+        //Hapus data permasalahan
+            if (isset($_POST['masalah_hapus'])){
+                // Mengambil Data
+    
+                $hapus = mysqli_query($conn, "DELETE FROM permasalahan WHERE id_permasalahan = '$_POST[id_permasalahan]'" );
+    
+                if ($hapus) {
+                    echo "<script>
+                            alert('Hapus Data Sukses!');
+                            document.location='../page/operator/operator.permasalahan.php';
+                        </script>";
+                } else {
+                    echo "<script>
+                            alert('Hapus Data Gagal!');
+                            document.location='../page/operator/operator.permasalahan.php';
+                        </script>";
+                }
+            }
+        //Akhir Operasi Tim Pengawas
+
+
         // Operasi untuk Foto Kegiatan
         // Aksi tambah Foto Kegiatan
         if (isset($_POST['foto_simpan'])) {
@@ -425,7 +467,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             } else {
                 echo "<script>
-                            alert('Data Foto berhasil Disimpan!');
+                            alert('Data Foto Gagal Disimpan!');
                             document.location='../page/operator/fotokegiatan.php';
                         </script>";
             }

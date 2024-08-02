@@ -17,9 +17,9 @@ if (isset($_GET['id_laporan_harian']) && isset($_GET['tanggal_laporan']) && isse
 
     if ($pilih && $tanggal && $nomor) {
         echo "<script>
-                alert('Pilih Laporan Berhasil!');
-                document.location='../../page/operator/pekerjaan.php';
-            </script>";
+                 sessionStorage.setItem('navigated', 'true');
+                window.location.href = '../../page/operator/pekerjaan.php?message=Laporan Dipilih';
+              </script>";
     } else {
         echo "<script>
                 alert('Pilih Laporan Gagal!');
