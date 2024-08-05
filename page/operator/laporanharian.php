@@ -2,29 +2,6 @@
     include "../../koneksi.php";
     include "../../public/layout/operator/header.laporan.php";
 ?>
- <style>
-        .table-thick-border {
-            border: 1px solid #000 !important;
-        }
-        .table-thick-border th, .table-thick-border td {
-            border: 1px solid #000 !important;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-
-        @media (max-width: 576px) {
-            .kolom-aksi {
-                width: 50%; /* 4 dari 12 kolom */
-            }
-
-            span {
-                display: none;
-            }
-        }
-</style>
             <h3 class=" text-center mt-4">Laporan Harian</h3>
 
                 <h4 class="text-center">Nama Projek : <?= $_SESSION['nama_projek_op']?></h4>
@@ -32,9 +9,7 @@
             <?php include 'operator.modal/modalAdd.laporanharian.php' ?>
 
                 <div class="container mt-100">
-                    <button type="button-center" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lh_tambah"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah">
-                        </i>Tambah
-                    </button>
+                
                     <a href="../admin/m_projek_utkop.php" class="btn btn-secondary align-item-right" ><i class='bx bx-arrow-back' style="margin-right: 5px;"></i>Kembali</a>
                     <div class="container">
                     <form method="GET" action="">
@@ -50,9 +25,16 @@
                     
                     
                     <div class="card mt-100">
-                        <h5 class="card-header bg-primary text-white">Data Laporan Harian</h5>
+                    <h5 class="card-header text-white d-flex align-items-center justify-content-between">
+                        <form class="d-flex justify-content-center" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        </form>
+                        <button type="button" class="btn btn-tambah text-white" data-bs-toggle="modal" data-bs-target="#lh_tambah">
+                            <i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>ADD
+                        </button>
+                    </h5>
 
-                            <table class="table table-striped table-bordered table-thick-border">
+                            <table class="table-thick-border">
                                 <tr>
                                     <th>No.</th>
                                     <th>Hari Ke-</th>
@@ -94,12 +76,12 @@
                                                     "&nomor=" . $nomor . 
                                                     "'>Hari-ke " . $nomor . "</a></td>"; 
                                                 ?>
-                                            <td class="text-center align-middle"><?= $data['tanggal_laporan'] ?></td>
+                                            <td class="text-center align-middle" style="color:464F60;"><?= $data['tanggal_laporan'] ?></td>
                                             <td class="text-center align-middle"><?= $data['progress_harian'] ?></td>
                                             <td>
                                                 <form action="../../script/projek_pilih.php" method="POST">
-                                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bxs-trash-alt' ><span> Hapus</span></i></a>
-                                                    <a href="#" class="btn btn-warning text-dark mt-1" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bxs-edit-alt' ><span> Ubah</span></i></a>
+                                                    <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bx-trash' ></i></a>
+                                                    <a href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bx-edit-alt'></i></a>
                                                     <input type="hidden" name="id_laporan" value="<?=$data['id_laporan_harian']?>">
                                                 </form>
                                             </td>

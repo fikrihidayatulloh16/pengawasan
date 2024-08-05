@@ -1,0 +1,68 @@
+
+/* Style untuk table */
+.table-thick-border {
+    border: 0px  #000 !important;
+}
+
+.table-thick-border th, .table-thick-border td {
+    border: 0px  #000 !important;
+}
+
+th{
+    background-color: #707070;
+    color: white;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+/* Alternating row colors */
+.table-thick-border tr:nth-child(odd) {
+    background-color: #CECECE; /* Color for odd rows */
+}
+
+.table-thick-border tr:nth-child(even) {
+    background-color: #AEAEAE; /* Color for even rows */
+}
+
+
+.card-header {
+    background-color: #707070;
+    border: 0px  #000 !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header form {
+    flex-grow: 1;
+    max-width: 600px; /* Adjust this value as needed */
+    display: flex;
+    justify-content: center;
+}
+
+.card-header form input {
+    width: 80%;
+    max-width: 300px; /* Adjust this value as needed */
+}
+
+.btn-tambah{
+    background-color: #333333;
+    margin-left: auto;
+}
+
+.btn-aksi{
+    background-color: none;
+}
+
+@media (max-width: 576px) {
+    .kolom-aksi {
+        width: 50%; /* 4 dari 12 kolom */
+    }
+
+    span {
+        display: none;
+    }
+}
