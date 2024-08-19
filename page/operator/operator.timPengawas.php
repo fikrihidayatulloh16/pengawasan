@@ -24,32 +24,18 @@
     $data_pekerjaan = mysqli_fetch_assoc($m_pekerjaan);
     $nama_pekerjaan = $data_pekerjaan['nama_pekerjaan'];
 ?>
-<style>
-    .table-thick-border {
-        border: 1px solid #000 !important;
-    }
-    .table-thick-border th, .table-thick-border td {
-        border: 1px solid #000 !important;
-    }
-    th {
-        text-align: center;
-    }
-</style>
     
 <?php include 'operator.modal/modalAdd.timPengawas.php'; ?>
 
-<div class="container mt-3">
-    <a href="pekerjaan.php" class="btn btn-secondary align-item-right ms-3 mt-3">
-        <i class='bx bx-arrow-back' style="margin-right: 5px;"></i> Kembali
-    </a>
-
-    <button type="button-center" class="btn btn-success ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#pengawas_tambah">
-        <i class='bx bx-plus-medical' style="margin-right: 5px;" name="pengawas_tambah"></i> Tambah
-    </button>
-    
+<div class="container mt-5">
     <div class="card mt-3">
-        <h5 class="card-header bg-primary text-white">Data Tim Pengawas</h5>
-        <table class="table table-striped table-bordered table-thick-border">
+        <h5 class="card-header">
+            Data Tim Pengawas
+            <button type="button-center" class="btn btn-tambah ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#pengawas_tambah">
+                <i class='bx bx-plus-medical' style="margin-right: 5px;" name="pengawas_tambah"></i> Tambah
+            </button>
+        </h5>
+        <table class="table-thick-border">
             <tr>
                 <th>Tim Pengawas</th>
                 <th>Tim Leader</th>
@@ -71,11 +57,11 @@
                 <td class="text-center"><?= $data['tim_leader'] ?></td>
                 <td class="text-center">
                     <form action="../../script/projek_pilih.php" method="POST">
-                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $data['id_tim_pengawas'] ?>">
-                            <i class='bx bxs-trash-alt'></i> Hapus
+                        <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $data['id_tim_pengawas'] ?>">
+                        <i class='bx bx-trash' ></i>
                         </a>
-                        <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $data['id_tim_pengawas'] ?>">
-                            <i class='bx bxs-edit-alt'></i> Ubah
+                        <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $data['id_tim_pengawas'] ?>">
+                            <i class='bx bxs-edit-alt'></i>
                         </a>
                         <input type="hidden" name="id_laporan" value="<?= $data['id_tim_pengawas'] ?>">
                     </form>
@@ -83,7 +69,7 @@
             </tr>
             <?php 
                 $nomor_masalah++; 
-                include "operator.modal/modalUD.permasalahan.php";
+                include 'operator.modal/modalUD_timpengawas.php';
                 endwhile;
                 } else { 
             ?>
@@ -93,8 +79,12 @@
             <?php } ?>
         </table>
     </div>
+
+    <a href="pekerjaan.php" class="btn btn-kembali mt-2">
+        <i class='bx bxs-chevrons-left'></i>Kembali
+    </a>
 </div>
 
 <?php
-    include "../../public/layout/operator/footer.operator.php";
+    include "../../public/layout/footer2.php";
 ?>

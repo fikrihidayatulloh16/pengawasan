@@ -21,44 +21,26 @@ $id_laporan_harian = $_SESSION['id_laporan_harian'];
 ?>
 
 <style>
-        /* Custom CSS untuk menyesuaikan tabel */
-        .table {
-            border-color: #000; /* Warna garis tabel menjadi hitam */
-        }
-        .table th, .table td {
-            padding: 1rem; /* Mengurangi padding agar jarak antar kolom lebih kecil */
-        }
-        .text-center {
-            text-align: center; /* Mengatur teks di tengah untuk kelas text-center */
-        }
-
-        .image-container {
-            max-width: 100%; /* Batas maksimum lebar gambar sesuai dengan kontainer */
-            height: auto; /* Menjaga rasio aspek gambar */
-        }
-
-        .image-container img {
-            width: 100%; /* Gambar akan menyesuaikan dengan lebar kontainer */
-            height: auto; /* Menjaga rasio aspek gambar */
+        .image {
+            max-width: 638px; /* Batas maksimum lebar gambar sesuai dengan kontainer */
+            height: 358.875px; /* Menjaga rasio aspek gambar */
+        
         }
 </style>
 
 <?php include 'operator.modal/modalAdd_fotokegiatan.php' ?>
 
 
-<div class="container mt-3">
-
-    <a href="pekerjaan.php" class="btn btn-secondary ms-3 mt-3">
-        <i class='bx bx-arrow-back' style="margin-right: 5px;"></i>Kembali
-    </a>
-    <button type="button-center" class="btn btn-success ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#fk_tambah">
-        <i class='bx bx-plus-medical' style="margin-right: 5px;"></i>Tambah
-    </button>
-    
+<div class="container mt-5">
     <div class="card mt-3">
-        <h5 class="card-header bg-primary text-white">Data Foto Kegiatan</h5>
+        <h5 class="card-header">
+            Data Foto Kegiatan
+            <button type="button-center" class="btn btn-tambah ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#fk_tambah">
+            <i class='bx bx-plus-medical' style="margin-right: 5px;"></i>ADD
+            </button>
+        </h5>
         <div class="table-responsive">
-            <table class="table table-striped table-bordered table-thick-border">
+            <table class="table-thick-border" style="width: 100%;">
                 <tr>
                     <th class="col-1">No.</th>
                     <th class="col-4">Foto</th>
@@ -79,15 +61,15 @@ $id_laporan_harian = $_SESSION['id_laporan_harian'];
                 ?>
                 <tr>
                     <td class="text-center"><?= $nomor ?></td>
-                    <td class="text-center image-container"><img src="uploads/<?= $data['foto'] ?>" alt="Foto Kegiatan"></td>
+                    <td class="text-center"><img class="image" src="http://localhost/pengawasan_me/public/asset/img/uploads/foto_kegiatan/<?= $data['foto'] ?>" alt="Foto Kegiatan"></td>
                     <td class="text-center"><?= $data['keterangan'] ?></td>
                     <td class="text-center">
                         <form action="../../script/operator_crud.php" method="POST">
-                            <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#foto_hapus<?= $data['id_foto_kegiatan'] ?>">
-                                <i class='bx bxs-trash-alt'></i> Hapus
+                            <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#fk_hapus<?= $data['id_foto_kegiatan'] ?>">
+                                <i class='bx bx-trash' ></i>
                             </a>
-                            <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#foto_ubah<?= $data['id_foto_kegiatan'] ?>">
-                                <i class='bx bxs-edit-alt'></i> Ubah
+                            <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#fk_ubah<?= $data['id_foto_kegiatan'] ?>">
+                                <i class='bx bxs-edit-alt'></i>
                             </a>
                             <input type="hidden" name="id_laporan_harian" value="<?= $data['id_laporan_harian'] ?>">
                         </form>
@@ -95,7 +77,7 @@ $id_laporan_harian = $_SESSION['id_laporan_harian'];
                 </tr>
                 <?php 
                     $nomor++; 
-                    include "operator.modal/modalUD.permasalahan.php";
+                    include "operator.modal/modalUD_fotokegiatan.php";
                     endwhile;
                     } else { 
                 ?>
@@ -106,8 +88,12 @@ $id_laporan_harian = $_SESSION['id_laporan_harian'];
             </table>
         </div>
     </div>
+
+    <a href="pekerjaan.php" class="btn btn-kembali mt-2">
+        <i class='bx bxs-chevrons-left'></i>Kembali
+    </a>
 </div>
 
 <?php
-    include "../../public/layout/operator/footer.operator.php";
+    include "../../public/layout/footer.php";
 ?>

@@ -1,21 +1,33 @@
+body {
+    font-family: 'ABeeZee', sans-serif;
+    font-size: 16px;
+  }
 
 /* Style untuk table */
 .table-thick-border {
-    border: 0px  #000 !important;
+    border: 1px solid #ffffff !important;
 }
 
-.table-thick-border th, .table-thick-border td {
-    border: 0px  #000 !important;
+.table-thick-border th {
+    border-top: 1px solid #ffffff !important;
+    border-right: 1px solid #ffffff !important;
 }
 
-th{
+.table-thick-border td {
+    border-right: 1px solid #ffffff !important;
+}
+
+th {
     background-color: #707070;
     color: white;
+    border-right: 1px solid #ffffff; /* Properti lengkap */
+    /*border-bottom: 1px solid #ffffff; /* Tambahkan border-bottom jika diperlukan */
 }
 
 th, td {
     padding: 8px;
     text-align: center;
+    font-family: 'Inter', sans-serif;
 }
 
 /* Alternating row colors */
@@ -30,10 +42,12 @@ th, td {
 
 .card-header {
     background-color: #707070;
+    color: white;
     border: 0px  #000 !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-family: 'Inter', sans-serif;
 }
 
 .card-header form {
@@ -48,13 +62,64 @@ th, td {
     max-width: 300px; /* Adjust this value as needed */
 }
 
-.btn-tambah{
+.btn-tambah, .btn-edit {
+    color: #ffffff;
     background-color: #333333;
+    font-family: 'Roboto';
     margin-left: auto;
+    
+}
+
+.bx{
+    margin-right: 5px;
 }
 
 .btn-aksi{
     background-color: none;
+}
+
+
+
+
+
+/*Gaya Font*/
+.inter-text {
+font-family: 'Inter', sans-serif;
+}
+  
+.roboto-text {
+    font-family: 'Roboto', sans-serif;
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 22px;
+    font-weight: bold;
+
+}
+
+/* Gaya untuk navbar */
+.nav-link .bx {
+    vertical-align: middle;
+    margin-right: -3px;
+}
+.dropdown-item i {
+    vertical-align: middle;
+}
+
+.separator-header {
+    border: none;
+    border-top: 4px solid #000000; /* Gunakan kode hex untuk hitam pekat */
+}
+
+.separator {
+    border: none;
+    border-top: 2px solid #000000;
+
 }
 
 @media (max-width: 576px) {
@@ -64,5 +129,24 @@ th, td {
 
     span {
         display: none;
+    }
+    .bx{
+        margin-right: 0px;
+    }
+
+    .image-container {
+        max-width: 100%; /* Batas maksimum lebar gambar sesuai dengan kontainer */
+        height: 100% !important; /* Menjaga rasio aspek gambar */
+    }
+
+    .image-container img {
+        width: 100%; /* Gambar akan menyesuaikan dengan lebar kontainer */
+        height: 200px !important; /* Menjaga rasio aspek gambar */
+    }
+}
+
+@media (max-width: 1024px) {
+    .kolom-aksi-pekerjaan {
+        width: 30%;
     }
 }

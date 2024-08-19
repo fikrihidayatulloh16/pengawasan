@@ -1,5 +1,5 @@
 <?php
-include 'db_connection.php';
+    include "../../koneksi.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_laporan_harian = $_POST['id_laporan_harian'];

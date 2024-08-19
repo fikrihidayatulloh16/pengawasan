@@ -1,16 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root"; // username default XAMPP
-$password = ""; // password default XAMPP
-$dbname = "pengawasan"; // ganti ini dengan nama database kamu
-
-// Buat koneksi
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Periksa koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
+include "../koneksi.php";
 
 //memulai sesi
 session_start();

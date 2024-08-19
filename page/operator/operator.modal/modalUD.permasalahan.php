@@ -2,7 +2,7 @@
 <div class="modal fade" id="modalUbah<?=$data['id_permasalahan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
+            <div class="modal-header bg-secondary text-white">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Ubah Data Permasalahan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -18,19 +18,19 @@
 
                         <div class="form-group">
                             <label for="permasalahan">Permasalahan:</label>
-                            <textarea type="text" id="permasalahan" name="permasalahan" class="form-control"  rows="3" maxlength="255" value="<?= $data['permasalahan']?>" placeholder="Masukkan Permasalahan" required></textarea>
+                            <textarea type="text" id="permasalahan" name="permasalahan" class="form-control"  rows="3" placeholder="Masukkan Permasalahan" required><?= $data['permasalahan']?></textarea>
                         </div>
                         <br>
                         <div class="form-group">
                             <label for="saran">Saran :</label>
-                            <textarea type="text" id="saran" name="saran" class="form-control"  rows="3" maxlength="255" value="<?= $data['saran']?>" placeholder="Masukkan Saran" required></textarea>
+                            <textarea type="text" id="saran" name="saran" class="form-control"  rows="3" maxlength="255" placeholder="Masukkan Saran" required><?= $data['saran']?></textarea>
                         </div>
                     </div>
                 </div>
                                     
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-warning text-dark" name="masalah_ubah">Ubah</button>
+                    <div class="modal-footer bg-secondary">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" name="masalah_ubah">Submit</button>
                     </div>
             </form>
         </div>
@@ -41,7 +41,7 @@
 <div class="modal fade" id="modalHapus<?=$data['id_permasalahan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-danger text-dark">
+            <div class="modal-header bg-secondary text-light">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus Data Permasalahan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -69,9 +69,9 @@
                     </div>
                 </div>
                                     
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger" name="masalah_hapus">Hapus</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <div class="modal-footer bg-secondary">
+                    <button type="submit" class="btn btn-danger" name="masalah_hapus">Delete</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>

@@ -1,19 +1,21 @@
 <style>
     .image-container {
-        max-width: 100%; /* Batas maksimum lebar gambar sesuai dengan kontainer */
-        height: 350px; /* Menjaga rasio aspek gambar */
-    }
+    max-width: 100%; /* Batas maksimum lebar gambar sesuai dengan kontainer */
+    height: 350px; /* Menjaga rasio aspek gambar */
+    
+}
 
-    .image-container img {
-        width: 100%; /* Gambar akan menyesuaikan dengan lebar kontainer */
-        height: 300px; /* Menjaga rasio aspek gambar */
-    }
+.image-container .image-rekap {
+    max-width: max-content; /* Gambar akan menyesuaikan dengan lebar kontainer */
+    height: 300px; /* Menjaga rasio aspek gambar */
+    
+}
 </style>
 
 <div class="card mt-3">
-    <h5 class="card-header bg-primary text-white">
+    <h5 class="card-header">
         Data Lampiran Foto Kegiatan
-        <a href="fotokegiatan.php" class="btn btn-warning text-dark ms-2 mt-0"><i class='bx bxs-edit-alt'>Ubah</i></a>
+        <a href="fotokegiatan.php" class="btn btn-edit ms-2 mt-0"><i class='bx bxs-edit-alt'></i>EDIT</a>
     </h5>
     <div class="card-body">
         <div class="container">
@@ -30,11 +32,11 @@
                     while ($data = mysqli_fetch_array($tampil)) {
                         if ($num_row % 2 == 0) {
                             // Mulai baris baru untuk setiap dua gambar
-                            echo '<div class="row mt-3">';
+                            echo '<div class="row mt-lg-3">';
                         }
             ?>
             <div class="image-container text-center col-lg-6 col-sm-12">
-                <img src="uploads/<?= $data['foto'] ?>" alt="Foto Kegiatan" class="img-fluid mt-3"><br><?= $data['keterangan'] ?>
+                <img src="http://localhost/pengawasan_me/public/asset/img/uploads/foto_kegiatan/<?= $data['foto'] ?>" alt="Foto Kegiatan" class="img-fluid image-rekap mt-3"><br><?= $data['keterangan'] ?>
             </div>
             <?php
                         $num_row++;
@@ -56,3 +58,5 @@
         </div>
     </div>
 </div>
+
+<hr class="separator">

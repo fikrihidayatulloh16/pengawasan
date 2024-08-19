@@ -12,7 +12,6 @@
     
             // Menyimpan ke dalam session
             $_SESSION['id_laporan_harian'] = $id_laporan_harian;
-            $_SESSION['tanggal_laporan'] = $tanggal_laporan;
             $_SESSION['nomor'] = $nomor;
         }
     }
@@ -28,26 +27,10 @@
     $data_pekerjaan = mysqli_fetch_assoc($m_pekerjaan);
     $nama_pekerjaan = $data_pekerjaan['nama_pekerjaan']
 ?>
+
+<link href="../../css/stylesPekerjaan.css" rel="stylesheet">
+
 <style>
-    .table-thick-border {
-        border: 1px solid #000 !important;
-    }
-    .table-thick-border th, .table-thick-border td {
-        border: 1px solid #000 !important;
-    }
-
-    th {
-        text-align: center;
-        border: #000;
-    }
-
-    td {
-        border: dark;
-    }
-
-    .header-laporan {
-        background-image: linear-gradient(#410DFD, #0D6EFD);
-    }
 
     .image-container {
         max-width: 100%; /* Batas maksimum lebar gambar sesuai dengan kontainer */
@@ -58,61 +41,33 @@
         width: 100%; /* Gambar akan menyesuaikan dengan lebar kontainer */
         height: auto; /* Menjaga rasio aspek gambar */
     }
+    
+    /* Style untuk table */
+.table-thick-border-pekerjaan {
+    border: 1px solid #ffffff !important;
+}
 
-    .tabel-cuaca {
-    border-collapse: separate;
-    border-spacing: 0;
-    border-top: 1px solid black;
-    border-bottom: 4px solid black;
-    border-right: 4px solid black;
-    }
+.table-thick-border-pekerjaan th {
+    border-top: 1px solid #000000 !important;
+    border-right: 1px solid #000000 !important;
+}
 
-    .tabel-cuaca th,
-    .tabel-cuaca td {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-    }
+.table-thick-border-pekerjaan td {
+    border-right: 1px solid #000000 !important;
+}
 
-    .tabel-cuaca th.no-column,
-    .tabel-cuaca td.no-column {
-        position: sticky;
-        left: 0;
-        background: white;
-        z-index: 1;
-        border-left: 4px solid black;
-        border-right: 1px solid black;
-        border-bottom: 1px solid black;
-    }
+th {
+    background-color: #707070;
+    color: white;
+    border-right: 1px solid #000000; /* Properti lengkap */
+    /*border-bottom: 1px solid #ffffff; /* Tambahkan border-bottom jika diperlukan */
+}
 
-    .tabel-cuaca th.weather-column,
-    .tabel-cuaca td.weather-column {
-        position: sticky;
-        left: 40px;
-        background: white;
-        z-index: 1;
-        border-right: 1px solid black;
-        border-left: 4px solid black;
-        border-bottom: 1px solid black;
-    }
-
-    .tabel-cuaca th {
-        background: white;
-        position: sticky;
-        top: 0;
-        z-index: 2;
-    }
-
-    .tabel-cuaca td.cerah {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .tabel-cuaca td.hujan {
-        background-color: #6c757d;
-        color: white;
-    }
+th, td {
+    padding: 8px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
 
 </style>
 <?php
@@ -140,6 +95,7 @@
                                             JOIN m_bahan AS mbh ON bh.id_m_bahan = mbh.id_m_bahan
                                             WHERE bh.id_laporan_harian = '$id_laporan_harian'");
 
+/*
 // Mengambil data cuaca
 $tampil_cuaca = mysqli_query($conn, "SELECT kondisi, jam_mulai, jam_selesai
                                         FROM cuaca
@@ -158,22 +114,24 @@ while ($data_cuaca = mysqli_fetch_assoc($tampil_cuaca)) {
         $weather_hours[$hour] = $kondisi;
     }
 }
-
+*/
 ?>
 
 
 
 <div class="container">
-        <a href="laporanharian.php" class="btn btn-secondary ms-3 mt-3" ><i class='bx bx-arrow-back' style="margin-right: 5px;"></i>Kembali</a>
-        
+
     <?php include "recap.pekerjaan/logoRecap.php" ?>
 
+    <hr class="separator">
 
     <?php include "recap.pekerjaan/cuacaRecap.php" ?>
 
-    <div class="card mt-3">
-    <h5 class="card-header bg-primary text-white">Data Cuaca</h5>
-    <div class="table-responsive" style="overflow-x: auto;">
+
+
+    <div class="card mt-3 cuaca-tabel2">
+    <h5 class="card-header">Data Cuaca</h5>
+    <div class="table-responsive tabel-cuaca" style="overflow-x: auto;">
         <table class="table table-striped tabel-cuaca">
             <thead>
                 <tr class="text-center">
@@ -187,7 +145,7 @@ while ($data_cuaca = mysqli_fetch_assoc($tampil_cuaca)) {
             <tbody class="table-group-divider">
                 <tr class="text-center align-middle ">
                     <td class="no-column">1</td>
-                    <td class="weather-column text-light">Cerah</td>
+                    <td class="weather-column">Cerah</td>
                     <?php for ($hour = 0; $hour < 24; $hour++): ?>
                         <td class="text-center align-middle <?= $weather_hours[$hour] == 'cerah' ? 'cerah' : '' ?>">
                             <?= $weather_hours[$hour] == 'cerah' ? 'Cerah' : '' ?>
@@ -208,31 +166,29 @@ while ($data_cuaca = mysqli_fetch_assoc($tampil_cuaca)) {
     </div>
 </div>
 
-
-
+<hr class="separator">
 
     <div class="card mt-3">
-        <h5 class="card-header bg-primary text-white">
+        <h5 class="card-header">
             Data Pekerjaan Harian
-            <a href="operator.pekerjaan.php" class="btn btn-warning text-dark ms-2 mt-0"><i class='bx bxs-edit-alt'>Ubah</i></a>
+            <a href="operator.pekerjaan.php" class="btn btn-edit text-white ms-2 mt-0"><i class='bx bxs-edit-alt'></i>EDIT</a>
         </h5>
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped table-thick-border-pekerjaan table-bordered">
                 <thead>
                     <tr class="text-center">
-                        <th class="text-center align-middle" rowspan="2" style="border-left: 4px solid black; border-top: 4px solid black; border-bottom: 4px solid black;">Pekerjaan : <? $nama_pekerjaan ?></th>
-                        <th class="text-center align-middle" colspan="2" style="border-top: 4px solid black; border-left: 4px solid black; border-bottom: 4px solid black;">Pekerja</th>
-                        <th class="text-center align-middle" colspan="2" style="border-top: 4px solid black; border-left: 4px solid black; border-bottom: 4px solid black;">Peralatan</th>
-                        <th class="text-center align-middle" colspan="2" style="border-top: 4px solid black; border-left: 4px solid black; border-right: 4px solid black; border-bottom: 4px solid black;">Bahan</th>
+                        <th class="text-center align-middle" rowspan="2">Pekerjaan : <? $nama_pekerjaan ?></th>
+                        <th class="text-center align-middle" colspan="2">Pekerja</th>
+                        <th class="text-center align-middle" colspan="2">Peralatan</th>
+                        <th class="text-center align-middle" colspan="2">Bahan</th>
                     </tr>
                     <tr class="text-center">
-                        <th class="text-center align-middle" style="border-left: 4px solid black; border-bottom: 4px solid black; border-right: 4px solid black;">Jenis Pekerja</th>
-                        <th class="text-center align-middle" style="border-bottom: 4px solid black; border-left: 4px solid black;">Jumlah Pekerja</th>
-
-                        <th class="text-center align-middle" style="border-left: 4px solid black; border-bottom: 4px solid black; border-right: 4px solid black">Nama Alat</th>
-                        <th class="text-center align-middle" style="border-right: 4px solid black; border-bottom: 4px solid black;">Jumlah Peralatan</th>
-                        <th class="text-center align-middle" style="border-left: 4px solid black; border-bottom: 4px solid black; border-right: 4px solid black">Nama Bahan</th>
-                        <th class="text-center align-middle" style="border-right: 4px solid black; border-bottom: 4px solid black;">Jumlah Bahan</th>
+                        <th class="text-center align-middle">Jenis Pekerja</th>
+                        <th class="text-center align-middle">Jumlah Pekerja</th>
+                        <th class="text-center align-middle">Nama Alat</th>
+                        <th class="text-center align-middle">Jumlah Peralatan</th>
+                        <th class="text-center align-middle">Nama Bahan</th>
+                        <th class="text-center align-middle">Jumlah Bahan</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -259,18 +215,18 @@ while ($data_cuaca = mysqli_fetch_assoc($tampil_cuaca)) {
                                     $pekerja = mysqli_fetch_assoc($pekerja_result);
                                     $alat = mysqli_fetch_assoc($alat_result);
                                     $bahan = mysqli_fetch_assoc($bahan_result);
-                                    $bottom_border = ($i == $max_rows - 1) ? '4px solid black' : '1px solid black'; // Set thick border for last row
+                                    $bottom_border = ($i == $max_rows - 1) ? '1px solid black' : '0px solid black'; // Set thick border for last row
                                     ?>
                                     <tr class="text-center align-middle">
                                         <?php if ($i == 0): ?>
-                                            <td rowspan="<?= $max_rows ?>" class="text-center" style="border-left: 4px solid black; border-bottom: 4px solid black; <?= $bottom_border ?>;"><?= $data_sub_pekerjaan['nama_sub_pekerjaan'] ?></td>
+                                            <td rowspan="<?= $max_rows ?>" class="text-center kolom-sub" style="border-bottom: 1px solid black;"><?= $data_sub_pekerjaan['nama_sub_pekerjaan'] ?></td>
                                         <?php endif; ?>
-                                        <td class="text-center" style="border-left: 4px solid black; border-bottom: <?= $bottom_border ?>;"><?= $pekerja['jenis_pekerja'] ?? '' ?></td>
-                                        <td class="text-center" style="border-right: 4px solid black; border-bottom: <?= $bottom_border ?>;"><?= $pekerja['jumlah_pekerja'] ?? '' ?></td>
-                                        <td class="text-center" style="border-left: 4px solid black; border-bottom: <?= $bottom_border ?>;"><?= $alat['nama_alat'] ?? '' ?></td>
-                                        <td class="text-center" style="border-right: 4px solid black; border-bottom: <?= $bottom_border ?>;"><?= $alat['jumlah_peralatan'] ?? '' ?> <?= $alat['satuan'] ?? '' ?></td>
-                                        <td class="text-center" style="border-left: 4px solid black; border-bottom: <?= $bottom_border ?>;"><?= $bahan['nama_bahan'] ?? '' ?></td>
-                                        <td class="text-center" style="border-right: 4px solid black; border-bottom: <?= $bottom_border ?>;"><?= $bahan['jumlah_bahan'] ?? '' ?> <?= $bahan['satuan'] ?? '' ?></td>
+                                        <td class="text-center kolom-pekerja" style="border-bottom: <?= $bottom_border ?>;"><?= $pekerja['jenis_pekerja'] ?? '' ?></td>
+                                        <td class="text-center kolom-pekerja" style="border-bottom: <?= $bottom_border ?>;"><?= $pekerja['jumlah_pekerja'] ?? '' ?></td>
+                                        <td class="text-center kolom-alat" style="border-bottom: <?= $bottom_border ?>;"><?= $alat['nama_alat'] ?? '' ?></td>
+                                        <td class="text-center kolom-alat" style="border-bottom: <?= $bottom_border ?>;"><?= $alat['jumlah_peralatan'] ?? '' ?> <?= $alat['satuan'] ?? '' ?></td>
+                                        <td class="text-center kolom-bahan" style="border-bottom: <?= $bottom_border ?>;"><?= $bahan['nama_bahan'] ?? '' ?></td>
+                                        <td class="text-center kolom-bahan" style="border-bottom: <?= $bottom_border ?>;"><?= $bahan['jumlah_bahan'] ?? '' ?> <?= $bahan['satuan'] ?? '' ?></td>
                                     </tr>
                                     <?php
                                 }
@@ -302,8 +258,12 @@ while ($data_cuaca = mysqli_fetch_assoc($tampil_cuaca)) {
 
         include "recap.pekerjaan/timPengawasRecap.php" ;
     ?>
+
+    <a href="laporanharian.php" class="btn btn-kembali mt-2">
+        <i class='bx bxs-chevrons-left'></i>Kembali
+    </a>
 </div>
 
 <?php
-    include "../../public/layout/operator/footer.operator.php";
+    include "../../public/layout/footer.php";
 ?>

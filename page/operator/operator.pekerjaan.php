@@ -27,41 +27,6 @@
     $data_pekerjaan = mysqli_fetch_assoc($m_pekerjaan);
     $nama_pekerjaan = $data_pekerjaan['nama_pekerjaan']
 ?>
-<style>
-    .table-thick-border {
-        border: 1px solid #000 !important;
-    }
-    .table-thick-border th, .table-thick-border td {
-        border: 1px solid #000 !important;
-    }
-
-    th {
-        text-align: center;
-    }
-
-    .btn-tambah {
-        margin-right: 0;
-    }
-
-    .kolom-aksi{
-        text-align: center;
-    }
-
-    @media (max-width: 1024px) {
-        .kolom-aksi-pekerjaan {
-            width: 30%;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .kolom-aksi-pekerjaan {
-            width: 40%; /* 4 dari 12 kolom */
-        }
-        span {
-            display: none;
-        }
-    }
-</style>
 <?php
     // Mengambil data pekerjaan dari tabel pekerjaan harian
     $sub_pekerjaan = mysqli_query($conn, "SELECT ph.id_laporan_harian, ph.id_m_sub_pekerjaan, ms.nama_sub_pekerjaan
@@ -79,15 +44,46 @@
     }
 ?>
 
-<a href="pekerjaan.php" class="btn btn-secondary mt-2 ms-3" style="right: 0;">
-    <i class='bx bx-arrow-back'></i>Kembali
-</a>
+<style>
+.nav-tabs {
 
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.nav-tabs .nav-link {
+    background-color: white;
+    color: white;
+    border-color: grey;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: grey;
+    color: white;
+}
+
+.nav-tabs::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.nav-tabs .nav-link:not(.active) {
+    color: black;
+}
+
+.nav-tabs .nav-link:not(.active):hover {
+    background-color: grey;
+    color: white;
+}
+
+</style>
+
+<div class="container">
     <nav>
         <div class="nav nav-tabs mt-3   " id="nav-tab" role="tablist">
             <?php foreach ($id_sub as $index => $sub): ?>
-                <button class="nav-link <?= $index === 0 ? 'active' : '' ?> " id="nav-<?= $sub['id_m_sub_pekerjaan'] ?>-tab" data-bs-toggle="tab" data-bs-target="#nav-<?= $sub['id_m_sub_pekerjaan'] ?>" type="button" role="tab" aria-controls="nav-<?= $sub['id_m_sub_pekerjaan'] ?>" aria-selected="<?= $index === 0 ? 'true' : 'false' ?>">
-                Sub <?= $nomor++ ?>
+                <button class="nav-link <?= $index === 0 ? 'active' : '' ?> " id="nav-<?= $sub['id_m_sub_pekerjaan'] ?>-tab" style="" data-bs-toggle="tab" data-bs-title="<?= $sub['nama_sub_pekerjaan'] ?>" data-bs-target="#nav-<?= $sub['id_m_sub_pekerjaan'] ?>" type="button" role="tab" aria-controls="nav-<?= $sub['id_m_sub_pekerjaan'] ?>" aria-selected="<?= $index === 0 ? 'true' : 'false' ?>">
+                <?= $sub['nama_sub_pekerjaan'] ?>
                 </button>
             <?php endforeach; ?>
         </div>
@@ -104,18 +100,18 @@
             ?>
 
          
-            <h2 class="ms-5 mt-3">Sub : <?= $sub['nama_sub_pekerjaan'] ?></h2>
+            <h2 class="ms-5 mt-5">Sub : <?= $sub['nama_sub_pekerjaan'] ?></h2>
 
             <div class="container mt-3">
                 <div class="card mt-3">
-                    <h5 class="card-header bg-primary text-white">
+                    <h5 class="card-header">
                         Data Pekerja
-                        <button type="button-center" class="btn btn-success btn-tambah" data-bs-toggle="modal" data-bs-target="#ph-pekerja-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
-                        Tambah
+                        <button type="button-center" class="btn btn-tambah" data-bs-toggle="modal" data-bs-target="#ph-pekerja-tambah-<?= $sub['id_m_sub_pekerjaan'] ?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
+                        ADD
                         </button>
                     </h5>
 
-                     <table class="table table-striped table-bordered">
+                     <table class="table-thick-border">
                         <tr>
                             <th class="col-3">Nama</th>
                             <th>Jumlah</th>
@@ -124,14 +120,14 @@
                         
                         <?php
                         //mengambil data pekerja dari database
-                        $tampil_pekerja = mysqli_query($conn, "SELECT pj.id_pekerja, mpj.jenis_pekerja, pj.jumlah_pekerja, ph.id_m_sub_pekerjaan
+                        $tampil_pekerja = mysqli_query($conn, "SELECT pj.id_pekerja, mpj.id_m_pekerja, mpj.jenis_pekerja, pj.jumlah_pekerja, ph.id_m_sub_pekerjaan
                                             FROM pekerja AS pj
                                             JOIN pekerjaan_harian AS ph ON pj.id_laporan_harian = ph.id_laporan_harian AND pj.id_m_sub_pekerjaan = ph.id_m_sub_pekerjaan
                                             JOIN m_pekerja AS mpj ON pj.id_m_pekerja = mpj.id_m_pekerja
                                             WHERE pj.id_laporan_harian = '$id_laporan_harian'
                                             AND pj.id_m_sub_pekerjaan = '$id_sub_pekerjaan'");
-
-                        while ($data_pekerja = mysqli_fetch_assoc($tampil_pekerja)) :
+                        if (mysqli_num_rows($tampil_pekerja) > 0) {
+                            while ($data_pekerja = mysqli_fetch_assoc($tampil_pekerja)) :
                         ?>
 
                         <tr>
@@ -139,26 +135,37 @@
                             <td class="text-center"><?= $data_pekerja['jumlah_pekerja'] ?> Orang</td>
                             <td class="text-center">
                                 <form action="../../script/projek_pilih.php" method="POST">
-                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ph-pekerja-hapus-<?=$data_pekerja['id_pekerja']?>"><i class='bx bxs-trash-alt' ></i><span> Hapus</span></a>
-                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#ph-pekerja-ubah-<?=$data_pekerja['id_pekerja']?>"><i class='bx bxs-edit-alt' ></i><span> Ubah</span></a>
+                                    <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#ph-pekerja-hapus-<?=$data_pekerja['id_pekerja']?>"><i class='bx bx-trash' ></i></a>
+                                    <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#ph-pekerja-ubah-<?=$data_pekerja['id_pekerja']?>"><i class='bx bxs-edit-alt' ></i></a>
                                     <input type="hidden" name="id_laporan" value="<?=$data['id_laporan_harian']?>">
                                 </form>
                             </td>
                         </tr>
 
-                        <?php include "operator.modal/modalUD.pekerjaanharian.php"; endwhile; ?>
+                        <?php 
+                        include "operator.modal/modalUD.pekerjaanharian.php"; 
+                        endwhile; 
+                        } else { 
+                        ?>
+
+                        <tr>
+                            <td colspan="4" class="text-center">Tidak ada data Pekerja!.</td>
+                        </tr>
+                        <?php } ?>
                      </table>
                 </div>
 
-                <div class="card mt-3">
-                    <h5 class="card-header bg-primary text-white">
+                <hr class="separator mt-5">
+
+                <div class="card mt-5">
+                    <h5 class="card-header">
                         Data Peralatan
-                        <button type="button-center" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ph-peralatan-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
-                        Tambah
+                        <button type="button-center" class="btn btn-tambah" data-bs-toggle="modal" data-bs-target="#ph-peralatan-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
+                        ADD
                         </button>
                     </h5>
 
-                     <table class="table table-striped table-bordered ">
+                     <table class="table-thick-border ">
                         <tr>
                             <th class="col-3">Nama</th>
                             <th>Jumlah</th>
@@ -167,14 +174,14 @@
 
                         <?php
                         //mengambil data pekerja dari database
-                        $peralatan = mysqli_query($conn, "SELECT mp.nama_alat, pl.jumlah_peralatan, mp.satuan
+                        $peralatan = mysqli_query($conn, "SELECT pl.id_peralatan,mp.id_m_peralatan, mp.nama_alat, pl.jumlah_peralatan, mp.satuan
                                                         FROM peralatan AS pl
                                                         JOIN m_peralatan AS mp ON pl.id_m_peralatan = mp.id_m_peralatan
                                                         JOIN pekerjaan_harian AS ph ON pl.id_laporan_harian = ph.id_laporan_harian AND pl.id_m_sub_pekerjaan = ph.id_m_sub_pekerjaan
                                                         WHERE pl.id_laporan_harian = '$id_laporan_harian'
                                                         AND pl.id_m_sub_pekerjaan = '$id_sub_pekerjaan'")
                                                         ;
-
+                            if (mysqli_num_rows($peralatan) > 0) {
                         while ($data_peralatan = mysqli_fetch_assoc($peralatan)) :
                         ?>
                         
@@ -183,25 +190,35 @@
                             <td class="text-center"><?= $data_peralatan['jumlah_peralatan'] ?> <?= $data_peralatan['satuan'] ?></td>
                             <td class="text-center">
                                 <form action="../../script/projek_pilih.php" method="POST">
-                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bxs-trash-alt' ></i><span> Hapus</span></a>
-                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bxs-edit-alt' ></i><span> Ubah</span></a>
-                                    <input type="hidden" name="id_laporan" value="<?=$data['id_laporan_harian']?>">
+                                    <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#ph-peralatan-hapus-<?=$data_peralatan['id_peralatan']?>"><i class='bx bx-trash' ></i></a>
+                                    <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#ph-peralatan-ubah-<?=$data_peralatan['id_peralatan']?>"><i class='bx bxs-edit-alt' ></i></a>
+                                    <input type="hidden" name="id_peralatan" value="<?=$data_peralatan['id_peralatan']?>">
                                 </form>
                             </td>
                         </tr>
-                        <?php endwhile; ?>
+                        <?php 
+                            include "operator.modal/modalUD.pekerjaanharian.php"; 
+                            endwhile; 
+                            } else { 
+                        ?>
+                        <tr>
+                            <td colspan="4" class="text-center">Tidak ada data Perlatan.</td>
+                        </tr>
+                        <?php } ?>
                      </table>
                 </div>
 
-                <div class="card mt-3">
-                    <h5 class="card-header bg-primary text-white">
+                <hr class="separator mt-5">
+
+                <div class="card mt-5">
+                    <h5 class="card-header">
                         Data Bahan
-                        <button type="button-center" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ph-bahan-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
-                        Tambah
+                        <button type="button-center" class="btn btn-tambah" data-bs-toggle="modal" data-bs-target="#ph-bahan-tambah-<?=$index?>"><i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>
+                        ADD
                         </button>
                     </h5>
 
-                     <table class="table table-striped table-bordered">
+                     <table class="table-thick-border">
                         <tr>
                             <th class="col-3">Nama</th>
                             <th>Jumlah</th>
@@ -210,13 +227,13 @@
 
                         <?php
                         //mengambil data pekerja dari database
-                        $bahan = mysqli_query($conn, "SELECT mb.nama_bahan, bh.jumlah_bahan, mb.satuan
+                        $bahan = mysqli_query($conn, "SELECT bh.id_bahan, mb.id_m_bahan, mb.nama_bahan, bh.jumlah_bahan, mb.satuan
                                                         FROM bahan AS bh
                                                         JOIN m_bahan AS mb ON bh.id_m_bahan = mb.id_m_bahan
                                                         JOIN pekerjaan_harian AS ph ON bh.id_laporan_harian = ph.id_laporan_harian AND bh.id_m_sub_pekerjaan = ph.id_m_sub_pekerjaan
                                                         WHERE bh.id_laporan_harian = '$id_laporan_harian'
                                                         AND ph.id_m_sub_pekerjaan = '$id_sub_pekerjaan'");
-
+                            if (mysqli_num_rows($bahan) > 0) {
                         while ($data_bahan = mysqli_fetch_assoc($bahan)) :
                         ?>
                         
@@ -225,18 +242,32 @@
                             <td class="text-center"><?= $data_bahan['jumlah_bahan']?> <?= $data_bahan['satuan'] ?></td>
                             <td class="text-center">
                                 <form action="../../script/projek_pilih.php" method="POST">
-                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data['id_laporan_harian']?>"><i class='bx bxs-trash-alt' ></i><span> Hapus</span></a>
-                                    <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_laporan_harian']?>"><i class='bx bxs-edit-alt' ></i><span> Ubah</span></a>
+                                    <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#ph-bahan-hapus-<?=$data_bahan['id_bahan']?>"><i class='bx bx-trash' ></i></a>
+                                    <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#ph-bahan-ubah-<?=$data_bahan['id_bahan']?>"><i class='bx bxs-edit-alt' ></i></a>
                                     <input type="hidden" name="id_laporan" value="<?=$data['id_laporan_harian']?>">
                                 </form>
                             </td>
                         </tr>
-                        <?php endwhile; ?>
+                        <?php 
+                        include "operator.modal/modalUD.pekerjaanharian.php";
+                        endwhile; 
+                         } else { 
+                        ?>
+                        <tr>
+                            <td colspan="4" class="text-center">Tidak ada data Bahan.</td>
+                        </tr>
+                        <?php } ?>
                      </table>
                 </div>
             </div>
         </div>
     <?php endforeach; ?>
+</div>
+
+<a href="pekerjaan.php" class="btn btn-kembali mt-2">
+        <i class='bx bxs-chevrons-left'></i>Kembali
+    </a>
+
 </div>
 
 <script>
@@ -267,8 +298,4 @@
     });
 </script>
 
-<?php
-    include "../../public/alert/successAlert.php";
-
-    include "../../public/layout/operator/footer.operator.php";
-?>
+<?php include "../../public/layout/footer.php"; ?>

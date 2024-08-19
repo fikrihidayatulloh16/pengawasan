@@ -1,0 +1,69 @@
+.kolom-sub{
+    background-color: #CECECE;
+    border-top: 2px #0000;
+}
+
+/*style untuk rekap cuaca*/
+.chart-container {
+    width: max-content;
+    height: 300px;
+    margin: 1% auto;
+}
+.legend-container {
+    text-align: center;
+    margin-top: 50px;
+}
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+}
+.legend-color {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.legend-label {
+    font-size: 14px;
+}
+.tabel-cuaca-container {
+    position: relative;
+    height: max-content; /* Sesuaikan nilai ini sesuai kebutuhan Anda */
+    overflow: auto;
+}
+.tabel-cuaca thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #ff0000; /* Warna latar belakang agar sesuai dengan tabel */
+}
+.tabel-cuaca th.weather-column {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background-color: #707070;
+    color: #fff;
+}
+.tabel-cuaca tbody th.weather-column {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: #707070;
+    color: #fff;
+}
+
+.tabel-cuaca td.cerah {
+    background-color: lightblue;
+}
+
+.tabel-cuaca td.gerimis {
+    background-color: lightgray;
+}
+
+.tabel-cuaca td.hujan {
+    background-color: rgb(146, 146, 146);
+    color: #fff;
+}
+
+.cuaca-tabel2{display: none;}

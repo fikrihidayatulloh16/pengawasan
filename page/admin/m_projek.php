@@ -19,7 +19,6 @@
     <h1 class="text-center">Master Projek</h1>
         
         <!-- Modal Tambah Proyek -->
-        <!-- Modal formProjek -->
         <div class="modal fade" id="formProjek" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -70,6 +69,9 @@
                             <div class="mb-3">
                                 <label for="logo1" class="form-label">Logo Pemilik</label>
                                 <input type="file" class="form-control" id="logo1" name="logo1" accept="image/*">
+                                <div class="mb-3 mt-3 d-flex justify-content-center">
+                                    <img id="logo1-preview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; height: auto;">
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="pengawas" class="form-label">Pengawas</label>
@@ -78,6 +80,9 @@
                             <div class="mb-3">
                                 <label for="logo2" class="form-label">Logo Pengawas</label>
                                 <input type="file" class="form-control" id="logo2" name="logo2" accept="image/*">
+                                <div class="mb-3 mt-3 d-flex justify-content-center">
+                                    <img id="logo2-preview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; height: auto;">
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="kontraktor" class="form-label">Kontraktor</label>
@@ -86,6 +91,9 @@
                             <div class="mb-3">
                                 <label for="logo3" class="form-label">Logo Kontraktor</label>
                                 <input type="file" class="form-control" id="logo3" name="logo3" accept="image/*">
+                                <div class="mb-3 mt-3 d-flex justify-content-center">
+                                    <img id="logo3-preview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; height: auto;">
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="tambahan_waktu_tambah" class="form-label">Tambahan Waktu</label>
@@ -155,7 +163,7 @@
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Ubah Master Projek</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form id="form_ubah" action="../../script/insert.php" method="POST">
+                                        <form id="form_ubah" action="../../script/insert.php" method="POST" enctype="multipart/form-data">
                                             <input type="hidden" name="id_projek" value="<?=$data['id_projek']?>">
                                             <div class="modal-body">
                                                 <div class="mb-3">
@@ -181,13 +189,35 @@
                                                     <input type="text" class="form-control" id="pemilik_pekerjaan_ubah_<?=$data['id_projek']?>" name="pemilik_pekerjaan" value="<?= $data['pemilik_pekerjaan']?>" required>
                                                 </div>
                                                 <div class="mb-3">
+                                                    <label for="logo1" class="form-label">Logo Pemilik</label>
+                                                    <input type="file" class="form-control" id="logo1-ubah-<?=$data['logo_pemilik']?>" name="logo1" accept="image/*" onchange="previewImageUbah(this, 'logo1-preview-ubah-<?=$data['logo_pemilik']?>')">
+                                                    <div class="mb-3 mt-3 d-flex justify-content-center">
+                                                        <img id="logo1-preview-ubah-<?=$data['logo_pemilik']?>" src="http://localhost/pengawasan_me/public/asset/img/uploads/logo/<?=$data['logo_pemilik']?>" alt="Preview Logo" style="max-width: 100%; height: auto;">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
                                                     <label for="pengawas" class="form-label">Pengawas</label>
                                                     <input type="text" class="form-control" id="pengawas_ubah_<?=$data['id_projek']?>" name="pengawas" value="<?= $data['pengawas']?>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="logo2" class="form-label">Logo Pengawas</label>
+                                                    <input type="file" class="form-control" id="logo2-ubah-<?=$data['logo_pengawas']?>" name="logo2" accept="image/*" onchange="previewImageUbah(this, 'logo2-preview-ubah-<?=$data['logo_pengawas']?>')">
+                                                    <div class="mb-3 mt-3 d-flex justify-content-center">
+                                                        <img id="logo2-preview-ubah-<?=$data['logo_pengawas']?>" src="http://localhost/pengawasan_me/public/asset/img/uploads/logo/<?=$data['logo_pengawas']?>" alt="Preview Logo" style="max-width: 100%; height: auto;">
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="kontraktor" class="form-label">Kontraktor</label>
                                                     <input type="text" class="form-control" id="kontraktor_ubah_<?=$data['id_projek']?>" name="kontraktor" value="<?= $data['kontraktor']?>" required>
                                                 </div>
+                                                <div class="mb-3">
+                                                    <label for="logo3" class="form-label">Logo Kontraktor</label>
+                                                    <input type="file" class="form-control" id="logo3-ubah-<?=$data['logo_kontraktor']?>" name="logo3" accept="image/*" onchange="previewImageUbah(this, 'logo3-preview-ubah-<?=$data['logo_kontraktor']?>')">
+                                                    <div class="mb-3 mt-3 d-flex justify-content-center">
+                                                        <img id="logo3-preview-ubah-<?=$data['logo_kontraktor']?>" src="http://localhost/pengawasan_me/public/asset/img/uploads/logo/<?=$data['logo_kontraktor']?>" alt="Preview Logo" style="max-width: 100%; height: auto;">
+                                                    </div>
+                                                </div>
+                                                
                                                 <div class="mb-3">
                                                     <label for="tambahan_waktu_ubah" class="form-label">Tambahan Waktu</label>
                                                     <input type="date" class="form-control" id="tambahan_waktu_ubah_<?=$data['id_projek']?>" name="tambahan_waktu_ubah" value="<?= $data['tambahan_waktu']?>">
@@ -306,6 +336,45 @@
                     });
                 <?php endwhile; ?>
             });
+
+              function previewImage(inputId, previewId) {
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+
+                input.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        preview.src = '#';
+                        preview.style.display = 'none';
+                    }
+                });
+            }
+
+            previewImage('logo1', 'logo1-preview');
+            previewImage('logo2', 'logo2-preview');
+            previewImage('logo3', 'logo3-preview');
+
+        function previewImageUbah(input, previewId) {
+        const file = input.files[0];
+        const preview = document.getElementById(previewId);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";  // Clear the preview if no file is selected
+        }
+    }
         </script>
     
 </body>

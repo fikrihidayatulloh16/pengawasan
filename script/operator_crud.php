@@ -85,12 +85,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($laporan_insert && $pekerjaan_harian_insert) {
             echo "<script>
-                    alert('Simpan Data Laporan Harian Sukses!');
+                    sessionStorage.setItem('navigated', 'true');
                     document.location='../page/operator/laporanharian.php';
                 </script>";
         } else {
             echo "<script>
                     alert('Simpan Data Laporan Harian Gagal!');
+                    document.location='../page/operator/laporanharian.php';
+                </script>";
+        }
+    }
+
+    //aksi ubah laporan
+
+    //aksi hapus laporan
+    if (isset($_POST['lh-hapus'])){
+        // Mengambil Data
+
+        $hapus = mysqli_query($conn, "DELETE FROM laporan_harian WHERE id_laporan_harian = '$_POST[id_laporan_harian]'" );
+
+        if ($hapus) {
+            echo "<script>
+                    sessionStorage.setItem('navigated', 'true');
+                    document.location='../page/operator/laporanharian.php';
+                </script>";
+        } else {
+            echo "<script>
+                    alert('Hapus Data Gagal!');
                     document.location='../page/operator/laporanharian.php';
                 </script>";
         }
@@ -140,6 +161,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    //aksi ubah pekerja
+    if (isset($_POST['ph-pekerja-ubah'])){
+        // Mengambil Data
+
+        $ubah = mysqli_query($conn, "UPDATE pekerja SET id_m_pekerja = '$_POST[id_m_pekerja]', jumlah_pekerja = '$_POST[jumlah_pekerja]' WHERE id_pekerja = '$_POST[id_pekerja]'" );
+
+        if ($ubah) {
+            echo "<script>
+                    sessionStorage.setItem('navigated', 'true');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        } else {
+            echo "<script>
+                    alert('Ubah Data Gagal!');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        }
+    }
+
+    //aksi hapus pekerja
+    if (isset($_POST['ph-pekerja-hapus'])){
+        // Mengambil Data
+
+        $hapus = mysqli_query($conn, "DELETE FROM pekerja WHERE id_pekerja = '$_POST[id_pekerja]'" );
+
+        if ($hapus) {
+            echo "<script>
+                    sessionStorage.setItem('navigated', 'true');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        } else {
+            echo "<script>
+                    alert('Hapus Data Gagal!');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        }
+    }
+
     //Operasi untuk Peralatan
     // Aksi tambah peralatan
     if (isset($_POST['ph-peralatan-simpan'])) {
@@ -173,7 +232,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($peralatan_insert) {
             echo "<script>
-                    alert('Simpan Data Peralatan Sukses!');
+                    sessionStorage.setItem('navigated', 'true');
                     document.location='../page/operator/operator.pekerjaan.php';
                 </script>";
         } else {
@@ -182,8 +241,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.location='../page/operator/operator.pekerjaan.php';
                 </script>";
         }
+    }
 
-        
+    //aksi ubah peralatan
+    if (isset($_POST['ph-peralatan-ubah'])){
+        // Mengambil Data
+
+        $ubah = mysqli_query($conn, "UPDATE peralatan SET id_m_peralatan = '$_POST[id_m_peralatan]', jumlah_peralatan = '$_POST[jumlah_peralatan]' WHERE id_peralatan = '$_POST[id_peralatan]'" );
+
+        if ($ubah) {
+            echo "<script>
+                    sessionStorage.setItem('navigated', 'true');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        } else {
+            echo "<script>
+                    alert('Ubah Data Gagal!');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        }
+    }
+
+    //aksi hapus peralatan
+    if (isset($_POST['ph-peralatan-hapus'])){
+        // Mengambil Data
+
+        $hapus = mysqli_query($conn, "DELETE FROM peralatan WHERE id_peralatan = '$_POST[id_peralatan]'" );
+
+        if ($hapus) {
+            echo "<script>
+                    sessionStorage.setItem('navigated', 'true');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        } else {
+            echo "<script>
+                    alert('Hapus Data Gagal!');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        }
     }
 
     //Operasi untuk Bahan
@@ -219,7 +314,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($bahan_insert) {
             echo "<script>
-                    alert('Simpan Data Bahan Sukses!');
+                    sessionStorage.setItem('navigated', 'true');
                     document.location='../page/operator/operator.pekerjaan.php';
                 </script>";
         } else {
@@ -228,8 +323,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.location='../page/operator/operator.pekerjaan.php';
                 </script>";
         }
+    }
 
-        
+    //aksi ubah bahan
+    if (isset($_POST['ph-bahan-ubah'])){
+        // Mengambil Data
+
+        $ubah = mysqli_query($conn, "UPDATE bahan SET id_m_bahan = '$_POST[id_m_bahan]', jumlah_bahan = '$_POST[jumlah_bahan]' WHERE id_bahan = '$_POST[id_bahan]'" );
+
+        if ($ubah) {
+            echo "<script>
+                    sessionStorage.setItem('navigated', 'true');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        } else {
+            echo "<script>
+                    alert('Ubah Data Gagal!');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        }
+    }
+
+    //aksi hapus bahan
+    if (isset($_POST['ph-bahan-hapus'])){
+        // Mengambil Data
+
+        $hapus = mysqli_query($conn, "DELETE FROM bahan WHERE id_bahan = '$_POST[id_bahan]'" );
+
+        if ($hapus) {
+            echo "<script>
+                    sessionStorage.setItem('navigated', 'true');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        } else {
+            echo "<script>
+                    alert('Hapus Data Gagal!');
+                    document.location='../page/operator/operator.pekerjaan.php';
+                </script>";
+        }
     }
 
     //Operasi untuk Permasalahan
@@ -263,7 +394,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($permasalahan_insert) {
             echo "<script>
-                    alert('Simpan Data Bahan Sukses!');
+                    sessionStorage.setItem('navigated', 'true');
                     document.location='../page/operator/operator.permasalahan.php';
                 </script>";
         } else {
@@ -282,7 +413,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($ubah) {
             echo "<script>
-                    alert('Ubah Data Sukses!');
+                    sessionStorage.setItem('navigated', 'true');
                     document.location='../page/operator/operator.permasalahan.php';
                 </script>";
         } else {
@@ -301,7 +432,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($hapus) {
                 echo "<script>
-                        alert('Hapus Data Sukses!');
+                        sessionStorage.setItem('navigated', 'true');
                         document.location='../page/operator/operator.permasalahan.php';
                     </script>";
             } else {
@@ -329,7 +460,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Check if update was successful
                 if ($cuaca_ubah_insert) {
                     echo "<script>
-                            alert('Data Cuaca berhasil diubah!');
+                            sessionStorage.setItem('navigated', 'true');
                             document.location='../page/operator/cuaca.php';
                         </script>";
                 } else {
@@ -370,9 +501,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             $pengawas_insert = mysqli_query($conn, $pengawas);
 
-            if ($permasalahan_insert) {
+            if ($pengawas_insert) {
                 echo "<script>
-                        alert('Simpan Data Tim Pengawas Sukses!');
+                        sessionStorage.setItem('navigated', 'true');
                         document.location='../page/operator/operator.timpengawas.php';
                     </script>";
             } else {
@@ -384,15 +515,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     
         //ubah data permasalahan
-        if (isset($_POST['masalah_ubah'])){
+        if (isset($_POST['timpengawas-ubah'])){
             // Mengambil Data
     
-            $ubah = mysqli_query($conn, "UPDATE permasalahan SET permasalahan = '$_POST[permasalahan]', saran = '$_POST[saran]' WHERE id_permasalahan = '$_POST[id_permasalahan]'" );
+            $ubah = mysqli_query($conn, "UPDATE tim_pengawas SET tim_pengawas = '$_POST[tim_pengawas]', tim_leader = '$_POST[tim_leader]' WHERE id_tim_pengawas = '$_POST[id_tim_pengawas]'" );
     
             if ($ubah) {
                 echo "<script>
-                        alert('Ubah Data Sukses!');
-                        document.location='../page/operator/operator.permasalahan.php';
+                        sessionStorage.setItem('navigated', 'true');
+                        document.location='../page/operator/operator.timPengawas.php';
                     </script>";
             } else {
                 echo "<script>
@@ -403,15 +534,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     
         //Hapus data permasalahan
-            if (isset($_POST['masalah_hapus'])){
+            if (isset($_POST['timpengawas-hapus'])){
                 // Mengambil Data
     
-                $hapus = mysqli_query($conn, "DELETE FROM permasalahan WHERE id_permasalahan = '$_POST[id_permasalahan]'" );
+                $hapus = mysqli_query($conn, "DELETE FROM tim_pengawas WHERE id_tim_pengawas = '$_POST[id_tim_pengawas]'" );
     
                 if ($hapus) {
                     echo "<script>
-                            alert('Hapus Data Sukses!');
-                            document.location='../page/operator/operator.permasalahan.php';
+                            sessionStorage.setItem('navigated', 'true');
+                            document.location='../page/operator/operator.timPengawas.php';
                         </script>";
                 } else {
                     echo "<script>
@@ -431,7 +562,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = $conn->query($sql_get_last_id);
             $row = $result->fetch_assoc();
             $last_id = $row['last_id'];
-
+        
             // Menghasilkan id_laporan baru dengan format FTO000001, FTO000002, ...
             if ($last_id) {
                 $num = intval(substr($last_id, 3)) + 1;
@@ -439,39 +570,215 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $num = 1;
             }
             $new_id = 'FTO' . str_pad($num, 6, '0', STR_PAD_LEFT);
-
+        
             // Menyimpan post ke variabel
             $id_laporan_harian = $_POST['id_laporan_harian'];
             $keterangan = $_POST['keterangan'];
-
-            // Handling file upload
-            $foto_name = $_FILES['foto']['name'];
+        
+              // Handling file upload
             $foto_temp = $_FILES['foto']['tmp_name'];
-            $foto_path = 'D:/xampp/htdocs/pengawasan/page/operator/uploads/' . $foto_name; // Lokasi absolut di server tempat Anda menyimpan gambar
+            $foto_error = $_FILES['foto']['error'];
+            
+            // Mendapatkan ekstensi file asli
+            $foto_ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
+            
+            // Menentukan nama file baru dengan id yang dihasilkan
+            $foto_name = $new_id . '.' . $foto_ext;
+            $foto_path = '../public/asset/img/uploads/foto_kegiatan/' . $foto_name;
+        
+            // Periksa apakah tidak ada error saat upload
+            if ($foto_error === UPLOAD_ERR_OK) {
+                // Pindahkan file dari temporary location ke lokasi yang ditentukan
+                if (move_uploaded_file($foto_temp, $foto_path)) {
+                    // Menyimpan ke database
+                    $sql_foto = "INSERT INTO foto_kegiatan (id_foto_kegiatan, id_laporan_harian, foto, keterangan) 
+                                VALUES ('$new_id', '$id_laporan_harian', '$foto_name', '$keterangan')";
+        
+                    $foto_insert = mysqli_query($conn, $sql_foto);
+        
+                    if ($foto_insert) {
+                        echo "<script>
+                                sessionStorage.setItem('navigated', 'true');
+                                document.location='../page/operator/fotokegiatan.php';
+                            </script>";
+                    } else {
+                        echo "Error: " . mysqli_error($conn);
+                    }
+                } else {
+                    echo "Error: File tidak dapat dipindahkan.";
+                    // Error tambahan untuk membantu troubleshooting
+                    if (!file_exists('D:/xampp/htdocs/pengawasan_me/page/operator/uploads/')) {
+                        echo "Error: Direktori tujuan tidak ditemukan.";
+                    } else if (!is_writable('D:/xampp/htdocs/pengawasan/page/operator/uploads/')) {
+                        echo "Error: Direktori tujuan tidak memiliki izin tulis.";
+                    }
+                }
+            } else {
+                // Menangani berbagai kesalahan upload file
+                switch ($foto_error) {
+                    case UPLOAD_ERR_INI_SIZE:
+                    case UPLOAD_ERR_FORM_SIZE:
+                        echo "Error: Ukuran file terlalu besar.";
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        echo "Error: File hanya ter-upload sebagian.";
+                        break;
+                    case UPLOAD_ERR_NO_FILE:
+                        echo "Error: Tidak ada file yang di-upload.";
+                        break;
+                    case UPLOAD_ERR_NO_TMP_DIR:
+                        echo "Error: Folder temporary tidak ditemukan.";
+                        break;
+                    case UPLOAD_ERR_CANT_WRITE:
+                        echo "Error: Gagal menulis file ke disk.";
+                        break;
+                    case UPLOAD_ERR_EXTENSION:
+                        echo "Error: Upload file dihentikan oleh ekstensi PHP.";
+                        break;
+                    default:
+                        echo "Error: Terjadi kesalahan yang tidak diketahui.";
+                        break;
+                }
+            }
+        }
 
-            // Pindahkan file dari temporary location ke lokasi yang ditentukan
-            if (move_uploaded_file($foto_temp, $foto_path)) {
-                // Menyimpan ke database
-                $sql_foto = "INSERT INTO foto_kegiatan (id_foto_kegiatan, id_laporan_harian, foto, keterangan) 
-                            VALUES ('$new_id', '$id_laporan_harian', '$foto_name', '$keterangan')";
+        //operasi ubah foto
+        if (isset($_POST['foto-ubah'])) {
+            $id_foto_kegiatan = $_POST['id_foto_kegiatan'];
+            $keterangan = $_POST['keterangan'];
+            
+            // Mengambil nama file lama dari database
+            $sql_get_foto = "SELECT foto FROM foto_kegiatan WHERE id_foto_kegiatan = '$id_foto_kegiatan'";
+            $result = mysqli_query($conn, $sql_get_foto);
+        
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $old_foto_name = $row['foto'];
+                $old_foto_path = '../public/asset/img/uploads/foto_kegiatan/' . $old_foto_name;
+                
+                // Periksa apakah ada file baru yang diupload
+                if (isset($_FILES['foto']) && $_FILES['foto']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $foto_error = $_FILES['foto']['error'];
+                    $foto_name = $_FILES['foto']['name'];
+                    $foto_temp = $_FILES['foto']['tmp_name'];
+        
+                    if ($foto_error === UPLOAD_ERR_OK) {
+                        // Menghapus file lama dari server
+                        if (file_exists($old_foto_path)) {
+                            unlink($old_foto_path);
+                        }
+        
+                        // Menentukan nama file baru
+                        $foto_ext = pathinfo($foto_name, PATHINFO_EXTENSION);
+                        $foto_new_name = $id_foto_kegiatan . '_foto.' . $foto_ext;
+                        $foto_path = '../public/asset/img/uploads/foto_kegiatan/' . $foto_new_name;
+        
+                        // Pindahkan file dari temporary location ke lokasi yang ditentukan
+                        if (move_uploaded_file($foto_temp, $foto_path)) {
+                            // Update database dengan nama file baru
+                            $sql_update_foto = "UPDATE foto_kegiatan SET foto = '$foto_new_name', keterangan = '$keterangan' WHERE id_foto_kegiatan = '$id_foto_kegiatan'";
+                            $update_result = mysqli_query($conn, $sql_update_foto);
+        
+                            if ($update_result) {
+                                echo "<script>
+                                        sessionStorage.setItem('navigated', 'true');
+                                        document.location='../page/operator/fotokegiatan.php';
+                                    </script>";
+                            } else {
+                                echo "Error: " . mysqli_error($conn);
+                            }
+                        } else {
+                            echo "Error: File tidak dapat dipindahkan.";
+                            // Error tambahan untuk membantu troubleshooting
+                            if (!file_exists('../public/asset/img/uploads/foto_kegiatan/')) {
+                                echo "Error: Direktori tujuan tidak ditemukan.";
+                            } else if (!is_writable('../public/asset/img/uploads/foto_kegiatan/')) {
+                                echo "Error: Direktori tujuan tidak memiliki izin tulis.";
+                            }
+                        }
+                    } else {
+                        // Menangani berbagai kesalahan upload file
+                        switch ($foto_error) {
+                            case UPLOAD_ERR_INI_SIZE:
+                            case UPLOAD_ERR_FORM_SIZE:
+                                echo "Error: Ukuran file terlalu besar.";
+                                break;
+                            case UPLOAD_ERR_PARTIAL:
+                                echo "Error: File hanya ter-upload sebagian.";
+                                break;
+                            case UPLOAD_ERR_NO_FILE:
+                                echo "Error: Tidak ada file yang di-upload.";
+                                break;
+                            case UPLOAD_ERR_NO_TMP_DIR:
+                                echo "Error: Folder temporary tidak ditemukan.";
+                                break;
+                            case UPLOAD_ERR_CANT_WRITE:
+                                echo "Error: Gagal menulis file ke disk.";
+                                break;
+                            case UPLOAD_ERR_EXTENSION:
+                                echo "Error: Upload file dihentikan oleh ekstensi PHP.";
+                                break;
+                            default:
+                                echo "Error: Terjadi kesalahan yang tidak diketahui.";
+                                break;
+                        }
+                    }
+                } else {
+                    // Tidak ada file baru, hanya perbarui keterangan
+                    $sql_update_foto = "UPDATE foto_kegiatan SET keterangan = '$keterangan' WHERE id_foto_kegiatan = '$id_foto_kegiatan'";
+                    $update_result = mysqli_query($conn, $sql_update_foto);
+        
+                    if ($update_result) {
+                        echo "<script>
+                                sessionStorage.setItem('navigated', 'true');
+                                document.location='../page/operator/fotokegiatan.php';
+                            </script>";
+                    } else {
+                        echo "Error: " . mysqli_error($conn);
+                    }
+                }
+            } else {
+                echo "Error: Foto tidak ditemukan.";
+            }
+        }
+        
 
-                $foto_insert = mysqli_query($conn, $sql_foto);
+        // Operasi hapus foto kegiatan
+        if (isset($_POST['foto-hapus'])) {
+            $id_foto_kegiatan = $_POST['id_foto_kegiatan'];
 
-                if ($foto_insert) {
+            // Mengambil nama file dari database
+            $sql_get_foto = "SELECT foto FROM foto_kegiatan WHERE id_foto_kegiatan = '$id_foto_kegiatan'";
+            $result = mysqli_query($conn, $sql_get_foto);
+
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $foto_name = $row['foto'];
+                $foto_path = '../public/asset/img/uploads/foto_kegiatan/' . $foto_name;
+
+                // Menghapus file dari server
+                if (file_exists($foto_path)) {
+                    unlink($foto_path);
+                }
+
+                // Menghapus entri dari database
+                $sql_delete_foto = "DELETE FROM foto_kegiatan WHERE id_foto_kegiatan = '$id_foto_kegiatan'";
+                $delete_result = mysqli_query($conn, $sql_delete_foto);
+
+                if ($delete_result) {
                     echo "<script>
-                            alert('Data Foto berhasil Disimpan!');
+                            sessionStorage.setItem('navigated', 'true');
                             document.location='../page/operator/fotokegiatan.php';
                         </script>";
                 } else {
                     echo "Error: " . mysqli_error($conn);
                 }
             } else {
-                echo "<script>
-                            alert('Data Foto Gagal Disimpan!');
-                            document.location='../page/operator/fotokegiatan.php';
-                        </script>";
+                echo "Error: Foto tidak ditemukan.";
             }
         }
+
+        
 
 }
 ?>

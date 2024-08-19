@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="../../css/successAlert.css">
 
-<div id="success-alert" class=" container-fluid alert success-alert">
+<div id="success-alert" class=" container alert success-alert">
     <span class="closebtn" onclick="hideSuccessAlert()">&times;</span> 
-    <i class='bx bx-check-circle'></i>
+    <i class='bx bx-check-circle'></i>Aksi Berhasil
     <strong id="alert-message">Success Alert!</strong>
 </div>
 

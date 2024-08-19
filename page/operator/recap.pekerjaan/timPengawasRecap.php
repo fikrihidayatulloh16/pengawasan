@@ -1,9 +1,9 @@
 <div class="card mt-3">
-        <h5 class="card-header bg-primary text-white">
+        <h5 class="card-header ">
             Data Tim Pengawas
-            <a href="operator.timPengawas.php" class="btn btn-warning text-dark ms-2 mt-0"><i class='bx bxs-edit-alt'>Ubah</i></a>
+            <a href="operator.timPengawas.php" class="btn btn-edit ms-2 mt-0"><i class='bx bxs-edit-alt'></i>EDIT</a>
         </h5>
-        <table class="table table-striped table-bordered table-thick-border">
+        <table class="table-thick-border">
             <tr>
                 <th class="col-6">Tim Pengawas</th>
                 <th class="col-6">Tim Leader</th>

@@ -1,12 +1,12 @@
 <div class="card mt-3">
-    <h5 class="card-header bg-primary text-white">
+    <h5 class="card-header">
         Data Permasalahan Harian
-        <a href="operator.permasalahan.php" class="btn btn-warning text-dark ms-2 mt-0"><i class='bx bxs-edit-alt'>Ubah</i></a>
+        <a href="operator.permasalahan.php" class="btn btn-edit ms-2 mt-0"><i class='bx bxs-edit-alt'></i>EDIT</a>
     </h5>
-        <table class="table table-striped table-bordered table-thick-border">
+        <table class="table-thick-border">
             <tr>
                 <th class="col-1">No.</th>
-                <th class="col-6">Permasalahan</th>
+                <th class="col-5">Permasalahan</th>
                 <th class="col-5">Saran</th>
             </tr>
             <?php
@@ -23,8 +23,8 @@
             ?>
             <tr>
                 <td class="text-center"><?= $nomor_masalah ?></td>
-                <td class="text-center"><?= $data['permasalahan'] ?></td>
-                <td class="text-center"><?= $data['saran'] ?></td>
+                <td style="text-align: justify;"><?= $data['permasalahan'] ?></td>
+                <td style="text-align: justify;"><?= $data['saran'] ?></td>
             </tr>
             <?php 
                 $nomor_masalah++; 
@@ -38,3 +38,5 @@
             <?php } ?>
         </table>
     </div>
+
+    <hr class="separator">

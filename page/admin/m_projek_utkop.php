@@ -115,6 +115,9 @@
                                         <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data['id_projek']?>"><i class='bx bxs-edit-alt' > Ubah</i></a>
                                         <input type="hidden" name="id_projek" value="<?=$data['id_projek']?>">
                                         <input type="hidden" name="nama_projek" value="<?=$data['nama_projek']?>">
+                                        <input type="hidden" name="tanggal_mulai" value="<?=$data['tanggal_mulai']?>">
+                                        <input type="hidden" name="tanggal_selesai" value="<?=$data['tanggal_selesai']?>">
+                                        <input type="hidden" name="tambahan_waktu" value="<?=$data['tambahan_waktu']?>">
                                         <button type="submit" href="#" class="btn btn-primary text-white" id="projek_pilih_op" name="projek_pilih_op">Pilih</i></button>
                                         </form>
                                     </td>

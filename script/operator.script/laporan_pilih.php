@@ -12,7 +12,7 @@ if (isset($_GET['id_laporan_harian']) && isset($_GET['tanggal_laporan']) && isse
 
     // Menyimpan ke dalam sesi
     $_SESSION['id_laporan_harian'] = $pilih;
-    $_SESSION['tanggal_laporan'] = $tanggal;
+    $_SESSION['tanggal_laporan'] = $tanggal_laporan;
     $_SESSION['nomor'] = $nomor;
 
     if ($pilih && $tanggal && $nomor) {

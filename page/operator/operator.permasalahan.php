@@ -24,38 +24,25 @@
     $data_pekerjaan = mysqli_fetch_assoc($m_pekerjaan);
     $nama_pekerjaan = $data_pekerjaan['nama_pekerjaan'];
 ?>
-<style>
-    .table-thick-border {
-        border: 1px solid #000 !important;
-    }
-    .table-thick-border th, .table-thick-border td {
-        border: 1px solid #000 !important;
-    }
-    th {
-        text-align: center;
-    }
-</style>
-
-
-
 <?php include 'operator.modal/modalAdd.permasalahan.php'; ?>
 
-<div class="container mt-3">
-    <a href="pekerjaan.php" class="btn btn-secondary align-item-right ms-3 mt-3">
-        <i class='bx bx-arrow-back' style="margin-right: 5px;"></i>Kembali
-    </a>
+<div class="container mt-5">
 
-    <button type="button-center" class="btn btn-success ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#masalah_tambah">
-        <i class='bx bx-plus-medical' style="margin-right: 5px;" name="masalah_tambah"></i>Tambah
-    </button>
+
     
     <div class="card mt-3">
-        <h5 class="card-header bg-primary text-white">Data Permasalahan Harian</h5>
-        <table class="table table-striped table-bordered table-thick-border">
+        <h5 class="card-header">
+            Data Permasalahan Harian
+            <button type="button-center" class="btn btn-tambah ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#masalah_tambah">
+                <i class='bx bx-plus-medical' style="margin-right: 5px;" name="masalah_tambah"></i><span>ADD</span>
+            </button>
+        </h5>
+        
+        <table class="table-thick-border">
             <tr>
-                <th>No.</th>
-                <th>Permasalahan</th>
-                <th>Saran</th>
+                <th >No.</th>
+                <th class="col-5">Permasalahan</th>
+                <th class="col-5">Saran</th>
                 <th class="col-2">Aksi</th>
             </tr>
             <?php
@@ -72,15 +59,15 @@
             ?>
             <tr>
                 <td class="text-center"><?= $nomor_masalah ?></td>
-                <td class="text-center"><?= $data['permasalahan'] ?></td>
-                <td class="text-center"><?= $data['saran'] ?></td>
+                <td style="text-align: justify; vertical-align: top;"><?= $data['permasalahan'] ?></td>
+                <td style="text-align: justify; vertical-align: top;"><?= $data['saran'] ?></td>
                 <td class="text-center">
                     <form action="../../script/projek_pilih.php" method="POST">
-                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $data['id_permasalahan'] ?>">
-                            <i class='bx bxs-trash-alt'></i> Hapus
+                        <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $data['id_permasalahan'] ?>">
+                            <i class='bx bx-trash' ></i>     
                         </a>
-                        <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $data['id_permasalahan'] ?>">
-                            <i class='bx bxs-edit-alt'></i> Ubah
+                        <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $data['id_permasalahan'] ?>">
+                            <i class='bx bxs-edit-alt'></i> 
                         </a>
                         <input type="hidden" name="id_laporan" value="<?= $data['id_laporan_harian'] ?>">
                     </form>
@@ -98,8 +85,12 @@
             <?php } ?>
         </table>
     </div>
+
+    <a href="pekerjaan.php" class="btn btn-kembali mt-2">
+        <i class='bx bxs-chevrons-left'></i>Kembali
+    </a>
 </div>
 
 <?php
-    include "../../public/layout/operator/footer.operator.php";
+    include "../../public/layout/footer2.php";
 ?>
